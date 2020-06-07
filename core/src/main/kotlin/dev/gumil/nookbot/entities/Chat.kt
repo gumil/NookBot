@@ -10,18 +10,11 @@ data class Chat(
     val id: Int,
 
     @SerialName("type")
-    val type: Type,
+    val type: String,
 
     @SerialName("username")
     val username: String? = null,
 
     @SerialName("first_name")
     val firstName: String? = null
-) {
-    enum class Type {
-        PRIVATE,
-        GROUP,
-        SUPERGROUP,
-        CHANNEL
-    }
-}
+)
