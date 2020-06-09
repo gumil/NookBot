@@ -14,6 +14,12 @@ fun MessageEntity.extractCommand(text: String): CommandContent {
     if (type != BOT_COMMAND) throw MessageEntityTypeNotSupported(type)
 
     val startIndex = offset + 1
-    return text.substring(startIndex, length).toLowerCase() to
+    val endIndex = if (text.contains('@')) {
+        text.indexOf('@')
+    } else {
+        length
+    }
+
+    return text.substring(startIndex, endIndex).toLowerCase() to
             text.substring(length + 1).toLowerCase()
 }

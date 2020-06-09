@@ -45,4 +45,20 @@ internal class ExtractCommandTests {
 
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun `ignores characters after @ symbol`() {
+        val type = BOT_COMMAND
+        val command = Random.nextDouble().toString()
+        val botName = Random.nextDouble().toString()
+        val text = Random.nextDouble().toString()
+        val commandCall = "/$command@$botName"
+        val messageEntity = MessageEntity(0, commandCall.length, type)
+
+        val actual = messageEntity.extractCommand("$commandCall $text")
+
+        val expected = command to text
+
+        assertEquals(expected, actual)
+    }
 }
