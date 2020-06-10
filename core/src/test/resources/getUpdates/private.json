@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 68874150,
+      "message": {
+        "message_id": 10,
+        "from": {
+          "id": 123456,
+          "is_bot": false,
+          "first_name": "firstname",
+          "username": "username",
+          "language_code": "en"
+        },
+        "chat": {
+          "id": 123456,
+          "first_name": "firstname",
+          "username": "username",
+          "type": "private"
+        },
+        "date": 1591724503,
+        "text": "a"
+      }
+    }
+  ]
+}

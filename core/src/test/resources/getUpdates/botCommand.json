@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 68874152,
+      "message": {
+        "message_id": 12,
+        "from": {
+          "id": 123456,
+          "is_bot": false,
+          "first_name": "firstname",
+          "username": "username",
+          "language_code": "en"
+        },
+        "chat": {
+          "id": 123456,
+          "title": "testnookbot",
+          "type": "group",
+          "all_members_are_administrators": true
+        },
+        "date": 1591725215,
+        "text": "/help",
+        "entities": [
+          {
+            "offset": 0,
+            "length": 5,
+            "type": "bot_command"
+          }
+        ]
+      }
+    }
+  ]
+}
