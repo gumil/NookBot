@@ -1,10 +1,12 @@
 package dev.gumil.nookbot.telegram
 
+import dev.gumil.nookbot.Component
 import dev.gumil.nookbot.entities.Update
 import dev.gumil.nookbot.readFromFile
-import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
+import io.ktor.http.HttpHeaders
+import io.ktor.http.headersOf
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,9 +16,9 @@ import java.util.stream.Stream
 
 internal class TelegramApiImplTest {
 
-    private val client = HttpClient(MockEngine) {
-        engine { addHandler { respond(httpContent) } }
-    }
+    private val client = Component.provideHttpClient(MockEngine {
+        respond(httpContent, headers = headersOf(HttpHeaders.ContentType, "application/json"))
+    })
 
     private val telegramApiImpl = TelegramApiImpl(client)
 
@@ -25,9 +27,10 @@ internal class TelegramApiImplTest {
     @ParameterizedTest
     @MethodSource("provideGetUpdatesArgs")
     fun `getUpdates returns list of updates from bot command`(file: String, expected: List<Update>) = runBlocking {
+
         httpContent = readFromFile(file)
 
-        val actual = telegramApiImpl.getUpdates()
+        val actual = telegramApiImpl.getUpdates(1, 1)
 
         assertEquals(expected, actual)
     }
