@@ -4,6 +4,7 @@ import dev.gumil.nookbot.BOT_COMMAND
 import dev.gumil.nookbot.entities.telegram.MessageEntity
 import dev.gumil.nookbot.exceptions.CommandNotSupported
 import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
+import dev.gumil.nookbot.exceptions.NoContentException
 import dev.gumil.nookbot.extractCommand
 import dev.gumil.nookbot.route.Command
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -77,6 +78,20 @@ internal class ExtractCommandTests {
 
         assertThrows<CommandNotSupported> {
             messageEntity.extractCommand("$commandCall $text")
+        }
+    }
+
+    @Test
+    fun `thows exception for command with no content`() {
+        val type = BOT_COMMAND
+        val command = Random.nextDouble().toString()
+        val botName = Random.nextDouble().toString()
+        val commandCall = "/$command@$botName"
+        val messageEntity =
+            MessageEntity(0, commandCall.length, type)
+
+        assertThrows<NoContentException> {
+            messageEntity.extractCommand(commandCall)
         }
     }
 }

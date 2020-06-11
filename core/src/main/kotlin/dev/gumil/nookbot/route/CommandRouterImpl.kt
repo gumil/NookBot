@@ -7,6 +7,7 @@ import dev.gumil.nookbot.entities.telegram.Update
 import dev.gumil.nookbot.entities.telegram.User
 import dev.gumil.nookbot.exceptions.CommandNotSupported
 import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
+import dev.gumil.nookbot.exceptions.NoContentException
 import dev.gumil.nookbot.extractCommand
 import dev.gumil.nookbot.service.OrdersService
 import org.slf4j.LoggerFactory
@@ -36,6 +37,9 @@ internal class CommandRouterImpl(
                     logger.info("Ignoring update: ${e.message}")
                     return
                 } catch (e: CommandNotSupported) {
+                    logger.info("Ignoring update: ${e.message}")
+                    return
+                } catch (e: NoContentException) {
                     logger.info("Ignoring update: ${e.message}")
                     return
                 }
