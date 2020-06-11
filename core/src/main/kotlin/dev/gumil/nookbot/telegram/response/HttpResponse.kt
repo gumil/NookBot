@@ -1,4 +1,4 @@
-package dev.gumil.nookbot.entities.telegram
+package dev.gumil.nookbot.telegram.response
 
 import kotlinx.serialization.Serializable
 
