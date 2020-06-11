@@ -13,7 +13,7 @@ data class Message(
     val from: User? = null,
 
     @SerialName("date")
-    val date: Int,
+    val date: Long,
 
     @SerialName("chat")
     val chat: Chat,
