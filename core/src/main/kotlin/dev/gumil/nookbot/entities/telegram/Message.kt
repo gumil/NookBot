@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Message(
 
     @SerialName("message_id")
-    val messageId: Int,
+    val messageId: Long,
 
     @SerialName("from")
     val from: User? = null,

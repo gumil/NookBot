@@ -20,7 +20,7 @@ internal class InMemoryOrdersRepositoryTest {
 
     @Test
     fun `save adds order to list of orders`() {
-        val chatId = Random.nextInt()
+        val chatId = Random.nextLong()
         val order = createOrder()
 
         ordersRepository.save(chatId, order)
@@ -31,7 +31,7 @@ internal class InMemoryOrdersRepositoryTest {
 
     @Test
     fun `delete order removes order from list`() {
-        val chatId = Random.nextInt()
+        val chatId = Random.nextLong()
         val order = createOrder()
 
         ordersRepository.save(chatId, order)
@@ -44,7 +44,7 @@ internal class InMemoryOrdersRepositoryTest {
 
     @Test
     fun `delete order returns false when order is not saved`() {
-        val chatId = Random.nextInt()
+        val chatId = Random.nextLong()
         val order = createOrder()
         val orderNotSaved = createOrder()
 
@@ -58,8 +58,8 @@ internal class InMemoryOrdersRepositoryTest {
 
     @Test
     fun `get order should only get order list from id`() {
-        val chatId = Random.nextInt()
-        val otherChatId = Random.nextInt()
+        val chatId = Random.nextLong()
+        val otherChatId = Random.nextLong()
         val order = createOrder()
         val otherOrder = createOrder()
 
@@ -72,15 +72,15 @@ internal class InMemoryOrdersRepositoryTest {
 
     private fun createOrder(): Order {
         val buyer = Resident(
-            Random.nextInt(),
+            Random.nextLong(),
             "buyer"
         )
         val seller = Resident(
-            Random.nextInt(),
+            Random.nextLong(),
             "seller"
         )
         return Order(
-            Random.nextInt(),
+            Random.nextLong(),
             Random.nextDouble().toString(),
             Random.nextBoolean(),
             buyer,

@@ -13,7 +13,7 @@ internal class TelegramApiImpl(
     private val baseUrl = "https://api.telegram.org/bot$token/"
     private val getUpdates = "getUpdates"
 
-    override suspend fun getUpdates(offset: Int, timeout: Int): List<Update> {
+    override suspend fun getUpdates(offset: Long, timeout: Int): List<Update> {
         val urlString = baseUrl + getUpdates
         val query = "?offset=$offset" +
                 "&timeout=$timeout" +

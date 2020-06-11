@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Update(
 
     @SerialName("update_id")
-    val updateId: Int,
+    val updateId: Long,
 
     @SerialName("message")
     val message: Message? = null

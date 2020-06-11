@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class Chat(
 
     @SerialName("id")
-    val id: Int,
+    val id: Long,
 
     @SerialName("type")
     val type: Type,
