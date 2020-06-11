@@ -1,11 +1,11 @@
 package dev.gumil.nookbot.telegram
 
 import dev.gumil.nookbot.BOT_COMMAND
-import dev.gumil.nookbot.entities.Chat
-import dev.gumil.nookbot.entities.Message
-import dev.gumil.nookbot.entities.MessageEntity
-import dev.gumil.nookbot.entities.Update
-import dev.gumil.nookbot.entities.User
+import dev.gumil.nookbot.entities.telegram.Chat
+import dev.gumil.nookbot.entities.telegram.Message
+import dev.gumil.nookbot.entities.telegram.MessageEntity
+import dev.gumil.nookbot.entities.telegram.Update
+import dev.gumil.nookbot.entities.telegram.User
 
 object TelegramApiFactory {
 

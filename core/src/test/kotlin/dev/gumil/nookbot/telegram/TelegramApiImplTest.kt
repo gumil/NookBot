@@ -1,7 +1,7 @@
 package dev.gumil.nookbot.telegram
 
 import dev.gumil.nookbot.Component
-import dev.gumil.nookbot.entities.Update
+import dev.gumil.nookbot.entities.telegram.Update
 import dev.gumil.nookbot.utils.TestMockEngine
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals

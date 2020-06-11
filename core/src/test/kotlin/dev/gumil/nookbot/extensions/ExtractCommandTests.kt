@@ -1,7 +1,7 @@
 package dev.gumil.nookbot.extensions
 
 import dev.gumil.nookbot.BOT_COMMAND
-import dev.gumil.nookbot.entities.MessageEntity
+import dev.gumil.nookbot.entities.telegram.MessageEntity
 import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
 import dev.gumil.nookbot.extractCommand
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -53,7 +53,8 @@ internal class ExtractCommandTests {
         val botName = Random.nextDouble().toString()
         val text = Random.nextDouble().toString()
         val commandCall = "/$command@$botName"
-        val messageEntity = MessageEntity(0, commandCall.length, type)
+        val messageEntity =
+            MessageEntity(0, commandCall.length, type)
 
         val actual = messageEntity.extractCommand("$commandCall $text")
 

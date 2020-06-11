@@ -1,7 +1,7 @@
 package dev.gumil.nookbot.telegram
 
-import dev.gumil.nookbot.entities.HttpResponse
-import dev.gumil.nookbot.entities.Update
+import dev.gumil.nookbot.entities.telegram.HttpResponse
+import dev.gumil.nookbot.entities.telegram.Update
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 

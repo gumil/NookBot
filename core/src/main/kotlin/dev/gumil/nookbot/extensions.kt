@@ -1,6 +1,6 @@
 package dev.gumil.nookbot
 
-import dev.gumil.nookbot.entities.MessageEntity
+import dev.gumil.nookbot.entities.telegram.MessageEntity
 import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
 
 /**
