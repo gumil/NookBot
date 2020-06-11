@@ -2,8 +2,10 @@ package dev.gumil.nookbot.extensions
 
 import dev.gumil.nookbot.BOT_COMMAND
 import dev.gumil.nookbot.entities.telegram.MessageEntity
+import dev.gumil.nookbot.exceptions.CommandNotSupported
 import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
 import dev.gumil.nookbot.extractCommand
+import dev.gumil.nookbot.route.Command
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -29,7 +31,7 @@ internal class ExtractCommandTests {
 
         val actual = messageEntity.extractCommand("/order tinapay")
 
-        val expected = "order" to "tinapay"
+        val expected = Command.ORDER to "tinapay"
 
         assertEquals(expected, actual)
     }
@@ -41,7 +43,7 @@ internal class ExtractCommandTests {
 
         val actual = messageEntity.extractCommand("/OrDeR TINAPAY")
 
-        val expected = "order" to "tinapay"
+        val expected = Command.ORDER to "tinapay"
 
         assertEquals(expected, actual)
     }
@@ -49,7 +51,7 @@ internal class ExtractCommandTests {
     @Test
     fun `ignores characters after @ symbol`() {
         val type = BOT_COMMAND
-        val command = Random.nextDouble().toString()
+        val command = Command.ORDER
         val botName = Random.nextDouble().toString()
         val text = Random.nextDouble().toString()
         val commandCall = "/$command@$botName"
@@ -61,5 +63,20 @@ internal class ExtractCommandTests {
         val expected = command to text
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `thows exception for unsupported command`() {
+        val type = BOT_COMMAND
+        val command = Random.nextDouble().toString()
+        val botName = Random.nextDouble().toString()
+        val text = Random.nextDouble().toString()
+        val commandCall = "/$command@$botName"
+        val messageEntity =
+            MessageEntity(0, commandCall.length, type)
+
+        assertThrows<CommandNotSupported> {
+            messageEntity.extractCommand("$commandCall $text")
+        }
     }
 }

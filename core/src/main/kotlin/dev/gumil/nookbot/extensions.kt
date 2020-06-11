@@ -1,16 +1,18 @@
 package dev.gumil.nookbot
 
 import dev.gumil.nookbot.entities.telegram.MessageEntity
+import dev.gumil.nookbot.exceptions.CommandNotSupported
 import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
+import dev.gumil.nookbot.route.Command
 
 /**
  * Only support bot commands
  */
 internal const val BOT_COMMAND = "bot_command"
 
-typealias CommandContent = Pair<String, String>
+internal typealias CommandContent = Pair<Command, String>
 
-fun MessageEntity.extractCommand(text: String): CommandContent {
+internal fun MessageEntity.extractCommand(text: String): CommandContent {
     if (type != BOT_COMMAND) throw MessageEntityTypeNotSupported(type)
 
     val startIndex = offset + 1
@@ -20,6 +22,13 @@ fun MessageEntity.extractCommand(text: String): CommandContent {
         length
     }
 
-    return text.substring(startIndex, endIndex).toLowerCase() to
-            text.substring(length + 1).toLowerCase()
+    val commandString = text.substring(startIndex, endIndex)
+
+    val command = try {
+        Command.valueOf(commandString.toUpperCase())
+    } catch (e: IllegalArgumentException) {
+        throw CommandNotSupported(commandString)
+    }
+
+    return command to text.substring(length + 1).toLowerCase()
 }
