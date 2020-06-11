@@ -22,5 +22,8 @@ data class Message(
     val entities: List<MessageEntity>? = null,
 
     @SerialName("text")
-    val text: String? = null
+    val text: String? = null,
+
+    @SerialName("reply_markup")
+    val replyMarkup: InlineKeyboardMarkup? = null
 )

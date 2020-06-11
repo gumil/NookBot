@@ -5,6 +5,7 @@ import dev.gumil.nookbot.entities.telegram.Update
 import dev.gumil.nookbot.utils.TestMockEngine
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -25,6 +26,15 @@ internal class TelegramApiImplTest {
         val actual = telegramApiImpl.getUpdates(1, 1)
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `sendMessage returns message sent`() = runBlocking {
+        mockEngine.enqueueResponseFromFile("sendMessage.json")
+
+        val actual = telegramApiImpl.sendMessage(TelegramApiFactory.sendMessageRequest())
+
+        assertEquals(TelegramApiFactory.sendMessageResponse(), actual)
     }
 
     companion object {
