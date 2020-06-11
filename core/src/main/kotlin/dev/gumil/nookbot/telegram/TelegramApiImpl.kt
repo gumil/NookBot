@@ -9,7 +9,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.http.HttpHeaders
-import io.ktor.http.headersOf
 
 internal class TelegramApiImpl(
     private val httpClient: HttpClient
