@@ -1,4 +1,4 @@
-package dev.gumil.nookbot.service
+package dev.gumil.nookbot.repository
 
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
@@ -9,48 +9,48 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
 
-internal class InMemoryOrdersServiceTest {
+internal class InMemoryOrdersRepositoryTest {
 
-    private lateinit var ordersService: InMemoryOrdersService
+    private lateinit var ordersRepository: InMemoryOrdersRepository
 
     @BeforeEach
     fun setUp() {
-        ordersService = InMemoryOrdersService()
+        ordersRepository = InMemoryOrdersRepository()
     }
 
     @Test
     fun `save adds order to list of orders`() {
-        val roomId = Random.nextInt()
+        val chatId = Random.nextInt()
         val order = createOrder()
 
-        ordersService.save(roomId, order)
-        val actual = ordersService.getOrders(roomId)
+        ordersRepository.save(chatId, order)
+        val actual = ordersRepository.getOrders(chatId)
 
         assertEquals(listOf(order), actual)
     }
 
     @Test
-    fun `send order removes order from list`() {
-        val roomId = Random.nextInt()
+    fun `delete order removes order from list`() {
+        val chatId = Random.nextInt()
         val order = createOrder()
 
-        ordersService.save(roomId, order)
-        val orderSent = ordersService.sendOrder(roomId, order)
-        val orderList = ordersService.getOrders(roomId)
+        ordersRepository.save(chatId, order)
+        val orderSent = ordersRepository.deleteOrder(chatId, order)
+        val orderList = ordersRepository.getOrders(chatId)
 
         assertTrue(orderSent)
         assertTrue(orderList?.isEmpty() == true)
     }
 
     @Test
-    fun `send order returns false when order is not saved`() {
-        val roomId = Random.nextInt()
+    fun `delete order returns false when order is not saved`() {
+        val chatId = Random.nextInt()
         val order = createOrder()
         val orderNotSaved = createOrder()
 
-        ordersService.save(roomId, order)
-        val orderSent = ordersService.sendOrder(roomId, orderNotSaved)
-        val orderList = ordersService.getOrders(roomId)
+        ordersRepository.save(chatId, order)
+        val orderSent = ordersRepository.deleteOrder(chatId, orderNotSaved)
+        val orderList = ordersRepository.getOrders(chatId)
 
         assertFalse(orderSent)
         assertEquals(listOf(order), orderList)
@@ -58,14 +58,14 @@ internal class InMemoryOrdersServiceTest {
 
     @Test
     fun `get order should only get order list from id`() {
-        val roomId = Random.nextInt()
-        val otherRoomId = Random.nextInt()
+        val chatId = Random.nextInt()
+        val otherChatId = Random.nextInt()
         val order = createOrder()
         val otherOrder = createOrder()
 
-        ordersService.save(roomId, order)
-        ordersService.save(otherRoomId, otherOrder)
-        val actual = ordersService.getOrders(roomId)
+        ordersRepository.save(chatId, order)
+        ordersRepository.save(otherChatId, otherOrder)
+        val actual = ordersRepository.getOrders(chatId)
 
         assertEquals(listOf(order), actual)
     }
