@@ -22,7 +22,7 @@ internal class TelegramApiImplTest {
     fun `getUpdates returns list of updates from bot command`(file: String, expected: List<Update>) = runBlocking {
         mockEngine.enqueueResponseFromFile(file)
 
-        val actual = telegramApiImpl.getUpdates(1)
+        val actual = telegramApiImpl.getUpdates(1, 1)
 
         assertEquals(expected, actual)
     }
