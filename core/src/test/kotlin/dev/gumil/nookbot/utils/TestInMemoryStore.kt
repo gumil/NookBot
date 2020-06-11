@@ -24,6 +24,10 @@ internal class TestInMemoryStore<T> {
         assertTrue(items?.contains(item) ?: false)
     }
 
+    fun verifyEmptyStore() {
+        assertTrue(itemsMap.isEmpty())
+    }
+
     fun tearDown() {
         itemsMap.clear()
     }
