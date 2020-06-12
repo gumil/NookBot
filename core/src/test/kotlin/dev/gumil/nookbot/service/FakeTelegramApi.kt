@@ -1,7 +1,7 @@
 package dev.gumil.nookbot.service
 
-import dev.gumil.nookbot.entities.telegram.Message
-import dev.gumil.nookbot.entities.telegram.Update
+import dev.gumil.nookbot.telegram.entities.Message
+import dev.gumil.nookbot.telegram.entities.Update
 import dev.gumil.nookbot.telegram.TelegramApi
 import dev.gumil.nookbot.telegram.request.SendMessageRequest
 import org.junit.jupiter.api.Assertions.assertEquals

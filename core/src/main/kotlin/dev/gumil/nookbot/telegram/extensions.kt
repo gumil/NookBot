@@ -1,9 +1,9 @@
-package dev.gumil.nookbot
+package dev.gumil.nookbot.telegram
 
-import dev.gumil.nookbot.entities.telegram.MessageEntity
-import dev.gumil.nookbot.exceptions.CommandNotSupported
-import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
-import dev.gumil.nookbot.exceptions.NoContentException
+import dev.gumil.nookbot.telegram.entities.MessageEntity
+import dev.gumil.nookbot.telegram.exceptions.CommandNotSupported
+import dev.gumil.nookbot.telegram.exceptions.MessageEntityTypeNotSupported
+import dev.gumil.nookbot.telegram.exceptions.NoContentException
 import dev.gumil.nookbot.route.Command
 
 /**

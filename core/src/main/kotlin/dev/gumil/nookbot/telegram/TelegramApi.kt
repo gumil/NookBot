@@ -1,7 +1,7 @@
 package dev.gumil.nookbot.telegram
 
-import dev.gumil.nookbot.entities.telegram.Message
-import dev.gumil.nookbot.entities.telegram.Update
+import dev.gumil.nookbot.telegram.entities.Message
+import dev.gumil.nookbot.telegram.entities.Update
 import dev.gumil.nookbot.telegram.request.SendMessageRequest
 
 interface TelegramApi {

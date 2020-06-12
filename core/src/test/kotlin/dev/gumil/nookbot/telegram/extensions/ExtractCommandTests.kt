@@ -1,11 +1,11 @@
-package dev.gumil.nookbot.extensions
+package dev.gumil.nookbot.telegram.extensions
 
-import dev.gumil.nookbot.BOT_COMMAND
-import dev.gumil.nookbot.entities.telegram.MessageEntity
-import dev.gumil.nookbot.exceptions.CommandNotSupported
-import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
-import dev.gumil.nookbot.exceptions.NoContentException
-import dev.gumil.nookbot.extractCommand
+import dev.gumil.nookbot.telegram.BOT_COMMAND
+import dev.gumil.nookbot.telegram.entities.MessageEntity
+import dev.gumil.nookbot.telegram.exceptions.CommandNotSupported
+import dev.gumil.nookbot.telegram.exceptions.MessageEntityTypeNotSupported
+import dev.gumil.nookbot.telegram.exceptions.NoContentException
+import dev.gumil.nookbot.telegram.extractCommand
 import dev.gumil.nookbot.route.Command
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName

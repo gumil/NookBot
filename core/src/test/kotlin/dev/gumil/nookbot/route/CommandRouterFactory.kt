@@ -1,11 +1,11 @@
 package dev.gumil.nookbot.route
 
-import dev.gumil.nookbot.BOT_COMMAND
-import dev.gumil.nookbot.entities.telegram.Chat
-import dev.gumil.nookbot.entities.telegram.Message
-import dev.gumil.nookbot.entities.telegram.MessageEntity
-import dev.gumil.nookbot.entities.telegram.Update
-import dev.gumil.nookbot.entities.telegram.User
+import dev.gumil.nookbot.telegram.BOT_COMMAND
+import dev.gumil.nookbot.telegram.entities.Chat
+import dev.gumil.nookbot.telegram.entities.Message
+import dev.gumil.nookbot.telegram.entities.MessageEntity
+import dev.gumil.nookbot.telegram.entities.Update
+import dev.gumil.nookbot.telegram.entities.User
 import kotlin.random.Random
 
 internal object CommandRouterFactory {

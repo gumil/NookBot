@@ -1,8 +1,8 @@
 package dev.gumil.nookbot.service
 
 import dev.gumil.nookbot.entities.Order
-import dev.gumil.nookbot.entities.telegram.InlineKeyboardButton
-import dev.gumil.nookbot.entities.telegram.InlineKeyboardMarkup
+import dev.gumil.nookbot.telegram.entities.InlineKeyboardButton
+import dev.gumil.nookbot.telegram.entities.InlineKeyboardMarkup
 import dev.gumil.nookbot.localization.Localization
 import dev.gumil.nookbot.repository.OrdersRepository
 import dev.gumil.nookbot.route.Command

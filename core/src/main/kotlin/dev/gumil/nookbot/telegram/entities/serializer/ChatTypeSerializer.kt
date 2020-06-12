@@ -1,6 +1,6 @@
-package dev.gumil.nookbot.entities.serializer
+package dev.gumil.nookbot.telegram.entities.serializer
 
-import dev.gumil.nookbot.entities.telegram.Chat
+import dev.gumil.nookbot.telegram.entities.Chat
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.Encoder
 import kotlinx.serialization.PrimitiveDescriptor

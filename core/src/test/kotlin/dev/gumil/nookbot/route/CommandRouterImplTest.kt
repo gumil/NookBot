@@ -2,7 +2,7 @@ package dev.gumil.nookbot.route
 
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
-import dev.gumil.nookbot.entities.telegram.Update
+import dev.gumil.nookbot.telegram.entities.Update
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

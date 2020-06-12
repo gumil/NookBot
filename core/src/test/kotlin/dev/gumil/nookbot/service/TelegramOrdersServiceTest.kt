@@ -2,8 +2,8 @@ package dev.gumil.nookbot.service
 
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
-import dev.gumil.nookbot.entities.telegram.Chat
-import dev.gumil.nookbot.entities.telegram.Message
+import dev.gumil.nookbot.telegram.entities.Chat
+import dev.gumil.nookbot.telegram.entities.Message
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

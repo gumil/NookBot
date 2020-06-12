@@ -1,6 +1,6 @@
 package dev.gumil.nookbot.telegram.request
 
-import dev.gumil.nookbot.entities.telegram.InlineKeyboardMarkup
+import dev.gumil.nookbot.telegram.entities.InlineKeyboardMarkup
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

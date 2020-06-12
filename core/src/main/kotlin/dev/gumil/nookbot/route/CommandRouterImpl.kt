@@ -2,13 +2,13 @@ package dev.gumil.nookbot.route
 
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
-import dev.gumil.nookbot.entities.telegram.Chat
-import dev.gumil.nookbot.entities.telegram.Update
-import dev.gumil.nookbot.entities.telegram.User
-import dev.gumil.nookbot.exceptions.CommandNotSupported
-import dev.gumil.nookbot.exceptions.MessageEntityTypeNotSupported
-import dev.gumil.nookbot.exceptions.NoContentException
-import dev.gumil.nookbot.extractCommand
+import dev.gumil.nookbot.telegram.entities.Chat
+import dev.gumil.nookbot.telegram.entities.Update
+import dev.gumil.nookbot.telegram.entities.User
+import dev.gumil.nookbot.telegram.exceptions.CommandNotSupported
+import dev.gumil.nookbot.telegram.exceptions.MessageEntityTypeNotSupported
+import dev.gumil.nookbot.telegram.exceptions.NoContentException
+import dev.gumil.nookbot.telegram.extractCommand
 import dev.gumil.nookbot.service.OrdersService
 import org.slf4j.LoggerFactory
 

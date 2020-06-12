@@ -1,6 +1,6 @@
-package dev.gumil.nookbot.entities.telegram
+package dev.gumil.nookbot.telegram.entities
 
-import dev.gumil.nookbot.entities.serializer.ChatTypeSerializer
+import dev.gumil.nookbot.telegram.entities.serializer.ChatTypeSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
