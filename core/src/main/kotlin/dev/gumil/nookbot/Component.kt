@@ -2,8 +2,8 @@ package dev.gumil.nookbot
 
 import dev.gumil.nookbot.repository.InMemoryOrdersRepository
 import dev.gumil.nookbot.repository.OrdersRepository
-import dev.gumil.nookbot.route.CommandRouter
-import dev.gumil.nookbot.route.CommandRouterImpl
+import dev.gumil.nookbot.telegram.CommandRouter
+import dev.gumil.nookbot.route.NookBotCommandRouter
 import dev.gumil.nookbot.service.OrdersService
 import dev.gumil.nookbot.service.TelegramOrdersService
 import dev.gumil.nookbot.telegram.TelegramApi
@@ -60,7 +60,7 @@ internal object Component {
     fun provideCommandRouter(
         ordersService: OrdersService = provideOrdersService()
     ): CommandRouter {
-        return CommandRouterImpl(ordersService)
+        return NookBotCommandRouter(ordersService)
     }
 
     @OptIn(UnstableDefault::class)

@@ -1,4 +1,4 @@
-package dev.gumil.nookbot.route
+package dev.gumil.nookbot
 
 import dev.gumil.nookbot.telegram.BOT_COMMAND
 import dev.gumil.nookbot.telegram.entities.Chat
@@ -8,18 +8,27 @@ import dev.gumil.nookbot.telegram.entities.Update
 import dev.gumil.nookbot.telegram.entities.User
 import kotlin.random.Random
 
-internal object CommandRouterFactory {
+internal object UpdateEntityFactory {
 
     fun getUpdateNoUser(): Update {
         return getUpdate()
     }
 
-    fun getUpdateForOrder(name: String): Update {
-        return getUpdate("order", name, getUser())
+    fun getUpdate(command: String, name: String): Update {
+        return getUpdate(
+            command,
+            name,
+            getUser()
+        )
     }
 
     fun getUpdatePrivateChat(): Update {
-        return getUpdate("order", null, getUser(), getChat(Chat.Type.PRIVATE))
+        return getUpdate(
+            "order",
+            null,
+            getUser(),
+            getChat(Chat.Type.PRIVATE)
+        )
     }
 
     private fun getUser(): User {
@@ -49,7 +58,7 @@ internal object CommandRouterFactory {
                 listOf(
                     MessageEntity(
                         0,
-                        6,
+                        (command?.length ?: 0) + 1,
                         BOT_COMMAND
                     )
                 ),

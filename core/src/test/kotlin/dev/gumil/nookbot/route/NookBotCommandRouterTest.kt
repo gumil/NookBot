@@ -1,5 +1,6 @@
 package dev.gumil.nookbot.route
 
+import dev.gumil.nookbot.UpdateEntityFactory
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
 import dev.gumil.nookbot.telegram.entities.Update
@@ -8,28 +9,51 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
 
-internal class CommandRouterImplTest {
+internal class NookBotCommandRouterTest {
     private val ordersService = FakeOrdersService()
 
-    private val commandRouter = CommandRouterImpl(ordersService)
+    private val commandRouter = NookBotCommandRouter(ordersService)
 
     @Test
     fun `null message should ignore routing`() = runBlocking {
-        commandRouter.route(Update(Random.nextLong()))
+        commandRouter.route(
+            Update(Random.nextLong()),
+            Random.nextDouble().toString(),
+            Random.nextDouble().toString()
+        )
 
         ordersService.verifyEmptyOrder()
     }
 
     @Test
     fun `null user should ignore routing`() = runBlocking {
-        commandRouter.route(CommandRouterFactory.getUpdateNoUser())
+        commandRouter.route(
+            UpdateEntityFactory.getUpdateNoUser(),
+            Random.nextDouble().toString(),
+            Random.nextDouble().toString()
+        )
 
         ordersService.verifyEmptyOrder()
     }
 
     @Test
     fun `private chat should ignore routing`() = runBlocking {
-        commandRouter.route(CommandRouterFactory.getUpdatePrivateChat())
+        commandRouter.route(
+            UpdateEntityFactory.getUpdatePrivateChat(),
+            Random.nextDouble().toString(),
+            Random.nextDouble().toString()
+        )
+
+        ordersService.verifyEmptyOrder()
+    }
+
+    @Test
+    fun `unsupported command should ignore routing`() = runBlocking {
+        commandRouter.route(
+            UpdateEntityFactory.getUpdatePrivateChat(),
+            Random.nextDouble().toString(),
+            Random.nextDouble().toString()
+        )
 
         ordersService.verifyEmptyOrder()
     }
@@ -37,7 +61,8 @@ internal class CommandRouterImplTest {
     @Test
     fun `command order saves order`() = runBlocking {
         val name = Random.nextDouble().toString()
-        val update = CommandRouterFactory.getUpdateForOrder(name)
+        val command = "order"
+        val update = UpdateEntityFactory.getUpdate(command, name)
         val order = Order(
             id = update.updateId,
             name = name,
@@ -47,7 +72,11 @@ internal class CommandRouterImplTest {
             )
         )
 
-        commandRouter.route(update)
+        commandRouter.route(
+            update,
+            command,
+            name
+        )
 
         ordersService.verifySavedOrder(update.message!!.chat.id, order)
     }
