@@ -1,5 +1,13 @@
 package dev.gumil.nookbot
 
+import dev.gumil.nookbot.repository.InMemoryOrdersRepository
+import dev.gumil.nookbot.repository.OrdersRepository
+import dev.gumil.nookbot.route.CommandRouter
+import dev.gumil.nookbot.route.CommandRouterImpl
+import dev.gumil.nookbot.service.OrdersService
+import dev.gumil.nookbot.service.TelegramOrdersService
+import dev.gumil.nookbot.telegram.TelegramApi
+import dev.gumil.nookbot.telegram.TelegramApiImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngine
@@ -28,6 +36,31 @@ internal object Component {
                 applyConfigurations()
             }
         }
+    }
+
+    fun provideTelegramApi(
+        httpClient: HttpClient = provideHttpClient()
+    ): TelegramApi {
+        return TelegramApiImpl(httpClient)
+    }
+
+    fun provideOrdersRepository(): OrdersRepository {
+        return InMemoryOrdersRepository()
+    }
+
+    fun provideOrdersService(
+        ordersRepository: OrdersRepository = provideOrdersRepository(),
+        telegramApi: TelegramApi = provideTelegramApi()
+    ): OrdersService {
+        return TelegramOrdersService(
+            ordersRepository, telegramApi
+        )
+    }
+
+    fun provideCommandRouter(
+        ordersService: OrdersService = provideOrdersService()
+    ): CommandRouter {
+        return CommandRouterImpl(ordersService)
     }
 
     @OptIn(UnstableDefault::class)

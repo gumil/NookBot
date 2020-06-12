@@ -1,17 +1,17 @@
 package dev.gumil.nookbot
 
-import dev.gumil.nookbot.telegram.TelegramApiImpl
 import kotlinx.coroutines.runBlocking
 
 fun main() = runBlocking {
-    val api = TelegramApiImpl(Component.provideHttpClient())
+    val api = Component.provideTelegramApi()
+    val router = Component.provideCommandRouter()
     val timeout = 5 //seconds
     var offset = 0L
 
     while (true) {
-        api.getUpdates(offset, timeout).forEach {
-            println(it)
-            offset = it.updateId + 1
+        api.getUpdates(offset, timeout).forEach { update ->
+            router.route(update)
+            offset = update.updateId + 1
         }
     }
 }
