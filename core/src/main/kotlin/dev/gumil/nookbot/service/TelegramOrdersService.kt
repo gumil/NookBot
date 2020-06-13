@@ -23,11 +23,7 @@ internal class TelegramOrdersService(
         telegramApi.sendMessage(
             SendMessageRequest(
                 id.toString(),
-                String.format(
-                    Localization.orderPlaced,
-                    order.buyer.name,
-                    order.name
-                ),
+                getOrderPlacedText(order),
                 getTakeOrderMarkup(order)
             )
         )
@@ -68,22 +64,26 @@ internal class TelegramOrdersService(
             if (order.seller != null) {
                 builder.append(String.format(
                     Localization.listOrderWithSellerItemBuyer,
-                    order.seller.name,
+                    "@${order.seller.name}",
                     order.name,
-                    order.buyer.name
+                    "@${order.buyer.name}"
                 ))
             } else {
                 builder.append(
-                    String.format(
-                        Localization.orderPlaced,
-                        order.buyer.name,
-                        order.name
-                    )
+                    getOrderPlacedText(order)
                 )
             }
             builder.append("\n")
         }
         telegramApi.sendMessage(SendMessageRequest(id.toString(), builder.toString()))
+    }
+
+    private fun getOrderPlacedText(order: Order): String {
+        return String.format(
+            Localization.orderPlaced,
+            "@${order.buyer.name}",
+            order.name
+        )
     }
 
     private fun getTakeOrderMarkup(order: Order): InlineKeyboardMarkup {
