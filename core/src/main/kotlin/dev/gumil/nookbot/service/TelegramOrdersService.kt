@@ -81,7 +81,7 @@ internal class TelegramOrdersService(
                     )
                 )
             }
-            builder.append("/n")
+            builder.append("\n")
         }
         telegramApi.sendMessage(SendMessageRequest(id.toString(), builder.toString()))
     }
