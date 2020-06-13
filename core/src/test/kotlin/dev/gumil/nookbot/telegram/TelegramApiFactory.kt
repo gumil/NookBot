@@ -7,6 +7,7 @@ import dev.gumil.nookbot.telegram.entities.Message
 import dev.gumil.nookbot.telegram.entities.MessageEntity
 import dev.gumil.nookbot.telegram.entities.Update
 import dev.gumil.nookbot.telegram.entities.User
+import dev.gumil.nookbot.telegram.request.EditMessageRequest
 import dev.gumil.nookbot.telegram.request.SendMessageRequest
 
 object TelegramApiFactory {
@@ -70,14 +71,21 @@ object TelegramApiFactory {
         )
     }
 
-    fun sendMessageResponse(): Message {
+    fun getMessageResponse(markUp: InlineKeyboardMarkup? = getInlineKeyboardMarkup()): Message {
         return Message(
             36,
             getBotUser(),
             1591898165,
             getChatGroup(),
             text = "golf bag",
-            replyMarkup = getInlineKeyboardMarkup()
+            replyMarkup = markUp
+        )
+    }
+
+    fun editMessageRequestMarkup(): EditMessageRequest {
+        return EditMessageRequest(
+            "123456",
+            36
         )
     }
 

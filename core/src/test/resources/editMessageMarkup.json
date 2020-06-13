@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "result": {
+    "message_id": 36,
+    "from": {
+      "id": 1080542137,
+      "is_bot": true,
+      "first_name": "NookBot",
+      "username": "nookex_bot"
+    },
+    "chat": {
+      "id": 123456,
+      "title": "testnookbot",
+      "type": "group",
+      "all_members_are_administrators": true
+    },
+    "date": 1591898165,
+    "text": "golf bag"
+  }
+}

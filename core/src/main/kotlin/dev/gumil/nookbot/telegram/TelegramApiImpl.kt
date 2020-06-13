@@ -2,6 +2,7 @@ package dev.gumil.nookbot.telegram
 
 import dev.gumil.nookbot.telegram.entities.Message
 import dev.gumil.nookbot.telegram.entities.Update
+import dev.gumil.nookbot.telegram.request.EditMessageRequest
 import dev.gumil.nookbot.telegram.request.SendMessageRequest
 import dev.gumil.nookbot.telegram.response.HttpResponse
 import io.ktor.client.HttpClient
@@ -16,8 +17,10 @@ internal class TelegramApiImpl(
 
     private val token = System.getenv("NOOK_BOT")
     private val baseUrl = "https://api.telegram.org/bot$token/"
+
     private val getUpdates = "getUpdates"
     private val sendMessage = "sendMessage"
+    private val editMessageMarkup = "editMessageReplyMarkup"
 
     override suspend fun getUpdates(offset: Long, timeout: Int): List<Update> {
         val urlString = baseUrl + getUpdates
@@ -35,6 +38,15 @@ internal class TelegramApiImpl(
         val httpResponse = httpClient.post<HttpResponse<Message>>(url) {
             header(HttpHeaders.ContentType, "application/json")
             body = sendMessageRequest
+        }
+        return httpResponse.result
+    }
+
+    override suspend fun editMessageMarkUp(editMessageRequest: EditMessageRequest): Message {
+        val url = baseUrl + editMessageMarkup
+        val httpResponse = httpClient.post<HttpResponse<Message>>(url) {
+            header(HttpHeaders.ContentType, "application/json")
+            body = editMessageRequest
         }
         return httpResponse.result
     }

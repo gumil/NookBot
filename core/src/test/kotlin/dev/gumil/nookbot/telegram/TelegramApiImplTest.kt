@@ -34,7 +34,16 @@ internal class TelegramApiImplTest {
 
         val actual = telegramApiImpl.sendMessage(TelegramApiFactory.sendMessageRequest())
 
-        assertEquals(TelegramApiFactory.sendMessageResponse(), actual)
+        assertEquals(TelegramApiFactory.getMessageResponse(), actual)
+    }
+
+    @Test
+    fun `editMessage returns message edited`() = runBlocking {
+        mockEngine.enqueueResponseFromFile("editMessageMarkup.json")
+
+        val actual = telegramApiImpl.sendMessage(TelegramApiFactory.sendMessageRequest())
+
+        assertEquals(TelegramApiFactory.getMessageResponse(null), actual)
     }
 
     companion object {
