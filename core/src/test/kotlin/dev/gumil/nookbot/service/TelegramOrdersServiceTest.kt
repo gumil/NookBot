@@ -76,7 +76,16 @@ internal class TelegramOrdersServiceTest {
             )
         )
 
-        val message = Message(
+        val messageEdited = Message(
+            Random.nextLong(),
+            date = Random.nextLong(),
+            chat = Chat(
+                Random.nextLong(),
+                Chat.Type.GROUP
+            )
+        )
+
+        val messageSent = Message(
             Random.nextLong(),
             date = Random.nextLong(),
             chat = Chat(
@@ -92,14 +101,16 @@ internal class TelegramOrdersServiceTest {
 
         val orderWithSeller = order.copy(seller = seller)
 
-        telegramApi.givenEditedMessage(message)
+        telegramApi.givenEditedMessage(messageEdited)
+        telegramApi.givenSentMessage(messageSent)
 
         repository.save(id, order)
 
         telegramOrdersService.takeOrder(id, messageId, orderId, seller)
 
         repository.verifySavedOrder(id, orderWithSeller)
-        telegramApi.verifyMessageEdited(message)
+        telegramApi.verifyMessageEdited(messageEdited)
+        telegramApi.verifyMessageSent(messageSent)
     }
 
     @AfterEach

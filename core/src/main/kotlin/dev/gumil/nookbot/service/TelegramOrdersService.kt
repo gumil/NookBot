@@ -43,6 +43,15 @@ internal class TelegramOrdersService(
 
         repository.save(id, order.copy(seller = seller))
         telegramApi.editMessageMarkUp(EditMessageRequest(id.toString(), messageId))
+        telegramApi.sendMessage(
+            SendMessageRequest(
+                id.toString(),
+                String.format(
+                    Localization.orderTaken,
+                    seller.name
+                )
+            )
+        )
     }
 
     private fun getTakeOrderMarkup(order: Order): InlineKeyboardMarkup {

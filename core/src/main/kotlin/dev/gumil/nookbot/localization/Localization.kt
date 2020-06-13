@@ -5,4 +5,6 @@ internal object Localization: LocalizationContract {
         get() = LocalizationEN.orderPlaced
     override val takeOrder: String
         get() = LocalizationEN.takeOrder
+    override val orderTaken: String
+        get() = LocalizationEN.orderTaken
 }

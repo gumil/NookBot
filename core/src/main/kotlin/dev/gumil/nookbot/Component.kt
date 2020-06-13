@@ -67,7 +67,10 @@ internal object Component {
     private fun HttpClientConfig<*>.applyConfigurations() {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
-                Json(JsonConfiguration(ignoreUnknownKeys = true))
+                Json(JsonConfiguration(
+                    encodeDefaults = false,
+                    ignoreUnknownKeys = true
+                ))
             )
         }
 
