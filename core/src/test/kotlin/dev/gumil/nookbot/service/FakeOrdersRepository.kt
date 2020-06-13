@@ -15,6 +15,10 @@ internal class FakeOrdersRepository: OrdersRepository {
         return store.getItems(id)
     }
 
+    override fun getOrder(chatId: Long, orderId: Long): Order? {
+        return getOrders(chatId)?.find { it.id == orderId }
+    }
+
     override fun deleteOrder(id: Long, order: Order): Boolean {
         return store.deleteItem(id, order)
     }

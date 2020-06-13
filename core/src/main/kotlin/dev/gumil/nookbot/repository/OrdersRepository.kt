@@ -8,5 +8,7 @@ interface OrdersRepository {
 
     fun getOrders(id: Long): List<Order>?
 
+    fun getOrder(chatId: Long, orderId: Long): Order?
+
     fun deleteOrder(id: Long, order: Order): Boolean
 }

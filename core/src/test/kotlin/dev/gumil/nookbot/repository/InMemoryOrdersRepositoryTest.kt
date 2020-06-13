@@ -4,6 +4,7 @@ import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -57,7 +58,7 @@ internal class InMemoryOrdersRepositoryTest {
     }
 
     @Test
-    fun `get order should only get order list from id`() {
+    fun `getOrders should only get order list from id`() {
         val chatId = Random.nextLong()
         val otherChatId = Random.nextLong()
         val order = createOrder()
@@ -70,7 +71,31 @@ internal class InMemoryOrdersRepositoryTest {
         assertEquals(listOf(order), actual)
     }
 
-    private fun createOrder(): Order {
+    @Test
+    fun `get order returns specific order`() {
+        val chatId = Random.nextLong()
+        val orderId = Random.nextLong()
+        val order = createOrder(orderId)
+
+        ordersRepository.save(chatId, order)
+        val actual = ordersRepository.getOrder(chatId, orderId)
+
+        assertEquals(order, actual)
+    }
+
+    @Test
+    fun `get order returns null`() {
+        val chatId = Random.nextLong()
+        val otherOrderId = Random.nextLong()
+        val order = createOrder()
+
+        ordersRepository.save(chatId, order)
+        val actual = ordersRepository.getOrder(chatId, otherOrderId)
+
+        assertNull(actual)
+    }
+
+    private fun createOrder(id: Long = Random.nextLong()): Order {
         val buyer = Resident(
             Random.nextLong(),
             "buyer"
@@ -80,7 +105,7 @@ internal class InMemoryOrdersRepositoryTest {
             "seller"
         )
         return Order(
-            Random.nextLong(),
+            id,
             Random.nextDouble().toString(),
             Random.nextBoolean(),
             buyer,

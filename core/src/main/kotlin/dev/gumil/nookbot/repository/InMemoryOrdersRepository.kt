@@ -14,6 +14,10 @@ internal class InMemoryOrdersRepository : OrdersRepository {
         return ordersMap[id]
     }
 
+    override fun getOrder(chatId: Long, orderId: Long): Order? {
+        return getOrders(chatId)?.find { it.id == orderId }
+    }
+
     override fun deleteOrder(id: Long, order: Order): Boolean {
         return ordersMap[id]?.remove(order) ?: false
     }
