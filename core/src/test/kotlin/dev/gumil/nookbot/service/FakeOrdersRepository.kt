@@ -27,6 +27,10 @@ internal class FakeOrdersRepository: OrdersRepository {
         store.verifySavedOrder(id, order)
     }
 
+    fun verifyEmptyOrders() {
+        store.verifyEmptyStore()
+    }
+
     fun tearDown() {
         store.tearDown()
     }

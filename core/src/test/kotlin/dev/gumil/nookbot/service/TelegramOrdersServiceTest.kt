@@ -44,6 +44,64 @@ internal class TelegramOrdersServiceTest {
         telegramApi.verifyMessageSent(message)
     }
 
+    @Test
+    fun `takeOrder when order not found ignores operation`() = runBlocking {
+        val id = Random.nextLong()
+        val messageId = Random.nextLong()
+        val orderId = Random.nextLong()
+
+        val resident = Resident(
+            Random.nextLong(),
+            Random.nextDouble().toString()
+        )
+
+        telegramOrdersService.takeOrder(id, messageId, orderId, resident)
+
+        repository.verifyEmptyOrders()
+        // no further verification
+    }
+
+    @Test
+    fun `takeOrder saves new order and edit message`() = runBlocking {
+        val id = Random.nextLong()
+        val messageId = Random.nextLong()
+        val orderId = Random.nextLong()
+
+        val order = Order(
+            orderId,
+            Random.nextDouble().toString(),
+            buyer = Resident(
+                Random.nextLong(),
+                Random.nextDouble().toString()
+            )
+        )
+
+        val message = Message(
+            Random.nextLong(),
+            date = Random.nextLong(),
+            chat = Chat(
+                Random.nextLong(),
+                Chat.Type.GROUP
+            )
+        )
+
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextDouble().toString()
+        )
+
+        val orderWithSeller = order.copy(seller = seller)
+
+        telegramApi.givenEditedMessage(message)
+
+        repository.save(id, order)
+
+        telegramOrdersService.takeOrder(id, messageId, orderId, seller)
+
+        repository.verifySavedOrder(id, orderWithSeller)
+        telegramApi.verifyMessageEdited(message)
+    }
+
     @AfterEach
     fun tearDown() {
         telegramApi.tearDown()
