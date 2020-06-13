@@ -101,16 +101,69 @@ internal class TelegramOrdersServiceTest {
 
         val orderWithSeller = order.copy(seller = seller)
 
+        repository.givenOrder(order)
         telegramApi.givenEditedMessage(messageEdited)
         telegramApi.givenSentMessage(messageSent)
-
-        repository.save(id, order)
 
         telegramOrdersService.takeOrder(id, messageId, orderId, seller)
 
         repository.verifySavedOrder(id, orderWithSeller)
         telegramApi.verifyMessageEdited(messageEdited)
         telegramApi.verifyMessageSent(messageSent)
+    }
+
+    @Test
+    fun `listOrder getsOrder and sends message`() = runBlocking {
+        val id = Random.nextLong()
+        val order = Order(
+            Random.nextLong(),
+            Random.nextDouble().toString(),
+            buyer = Resident(
+                Random.nextLong(),
+                Random.nextDouble().toString()
+            )
+        )
+
+        val message = Message(
+            Random.nextLong(),
+            date = Random.nextLong(),
+            chat = Chat(
+                Random.nextLong(),
+                Chat.Type.GROUP
+            )
+        )
+
+        val orderList = listOf(order)
+        repository.givenListOfOrders(orderList)
+        telegramApi.givenSentMessage(message)
+
+        telegramOrdersService.listOrder(id)
+
+        repository.verifyListOfOrders(orderList)
+        telegramApi.verifyMessageSent(message)
+    }
+
+    @Test
+    fun `listOrder getsOrder when there are no orders still sends message`() = runBlocking {
+        val id = Random.nextLong()
+
+        val message = Message(
+            Random.nextLong(),
+            date = Random.nextLong(),
+            chat = Chat(
+                Random.nextLong(),
+                Chat.Type.GROUP
+            )
+        )
+
+        val orderList = emptyList<Order>()
+        repository.givenListOfOrders(orderList)
+        telegramApi.givenSentMessage(message)
+
+        telegramOrdersService.listOrder(id)
+
+        repository.verifyListOfOrders(orderList)
+        telegramApi.verifyMessageSent(message)
     }
 
     @AfterEach

@@ -8,4 +8,6 @@ interface OrdersService {
     suspend fun saveOrder(id: Long, order: Order)
 
     suspend fun takeOrder(id: Long, messageId: Long, orderId: Long, seller: Resident)
+
+    suspend fun listOrder(id: Long)
 }

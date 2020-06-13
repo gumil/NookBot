@@ -54,6 +54,38 @@ internal class TelegramOrdersService(
         )
     }
 
+    override suspend fun listOrder(id: Long) {
+        val orders = repository.getOrders(id)
+
+        if (orders.isNullOrEmpty()) {
+            telegramApi.sendMessage(SendMessageRequest(id.toString(), Localization.noPendingOrders))
+            return
+        }
+
+        val builder = StringBuilder()
+
+        orders.forEach { order ->
+            if (order.seller != null) {
+                builder.append(String.format(
+                    Localization.listOrderWithSellerItemBuyer,
+                    order.seller.name,
+                    order.name,
+                    order.buyer.name
+                ))
+            } else {
+                builder.append(
+                    String.format(
+                        Localization.orderPlaced,
+                        order.buyer.name,
+                        order.name
+                    )
+                )
+            }
+            builder.append("/n")
+        }
+        telegramApi.sendMessage(SendMessageRequest(id.toString(), builder.toString()))
+    }
+
     private fun getTakeOrderMarkup(order: Order): InlineKeyboardMarkup {
         return InlineKeyboardMarkup(
             listOf(

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 internal class FakeOrdersService: OrdersService {
     private var savedOrder: Pair<Long, Order>? = null
     private var takeOrder: OrderTaken? = null
+    private var listOrderId: Long? = null
 
     override suspend fun saveOrder(id: Long, order: Order) {
         savedOrder = id to order
@@ -16,6 +17,10 @@ internal class FakeOrdersService: OrdersService {
 
     override suspend fun takeOrder(id: Long, messageId: Long, orderId: Long, seller: Resident) {
         takeOrder = OrderTaken(id, messageId, orderId, seller)
+    }
+
+    override suspend fun listOrder(id: Long) {
+        listOrderId = id
     }
 
     fun verifySavedOrder(id: Long, order: Order) {
@@ -32,6 +37,10 @@ internal class FakeOrdersService: OrdersService {
         assertEquals(messageId, takeOrder?.messageId)
         assertEquals(orderId, takeOrder?.orderId)
         assertEquals(seller, takeOrder?.seller)
+    }
+
+    fun verifyListOrder(id: Long) {
+        assertEquals(id, listOrderId)
     }
 
     fun tearDown() {

@@ -7,4 +7,8 @@ internal object Localization: LocalizationContract {
         get() = LocalizationEN.takeOrder
     override val orderTaken: String
         get() = LocalizationEN.orderTaken
+    override val listOrderWithSellerItemBuyer: String
+        get() = LocalizationEN.listOrderWithSellerItemBuyer
+    override val noPendingOrders: String
+        get() = LocalizationEN.noPendingOrders
 }
