@@ -17,13 +17,14 @@ internal class NookBotCommandRouter(
 
     override suspend fun route(update: Update, command: String, content: String) {
         // Ignore updates with no message
-        update.message ?: return
+        val message = update.message
+        message ?: return
 
         // Ignore updates with unknown user
-        update.message.from ?: return
+        message.from ?: return
 
         // Only support group messages
-        if (update.message.chat.type != Chat.Type.GROUP) return
+        if (message.chat.type != Chat.Type.GROUP) return
 
         val nookCommand = try {
             Command.valueOf(command.toUpperCase())
@@ -31,11 +32,13 @@ internal class NookBotCommandRouter(
             logger.info("Ignoring update with $command")
         }
 
-        val chatId = update.message.chat.id
+        val orderId = update.updateId
+        val chatId = message.chat.id
+        val messageId = message.messageId
 
         when (nookCommand) {
-            Command.ORDER -> order(chatId, update.updateId, content, update.message.from)
-            Command.TAKE -> TODO()
+            Command.ORDER -> order(chatId, orderId, content, message.from)
+            Command.TAKE -> takeOrder(chatId, orderId, messageId, message.from)
             Command.CANCEL -> TODO()
             Command.SENT -> TODO()
             Command.LIST -> TODO()
@@ -53,6 +56,18 @@ internal class NookBotCommandRouter(
                 id = orderId,
                 name = content,
                 buyer = Resident(user.id, user.username ?: user.firstName)
+            )
+        )
+    }
+
+    private suspend fun takeOrder(chatId: Long, orderId: Long, messageId: Long, user: User) {
+        ordersService.takeOrder(
+            chatId,
+            messageId,
+            orderId,
+            Resident(
+                user.id,
+                user.username ?: user.firstName
             )
         )
     }

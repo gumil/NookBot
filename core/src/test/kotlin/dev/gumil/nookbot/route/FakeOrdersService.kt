@@ -3,28 +3,46 @@ package dev.gumil.nookbot.route
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
 import dev.gumil.nookbot.service.OrdersService
-import dev.gumil.nookbot.utils.TestInMemoryStore
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 
 internal class FakeOrdersService: OrdersService {
-    private val store = TestInMemoryStore<Order>()
+    private var savedOrder: Pair<Long, Order>? = null
+    private var takeOrder: OrderTaken? = null
 
     override suspend fun saveOrder(id: Long, order: Order) {
-        store.save(id, order)
+        savedOrder = id to order
     }
 
     override suspend fun takeOrder(id: Long, messageId: Long, orderId: Long, seller: Resident) {
-        TODO("Not yet implemented")
+        takeOrder = OrderTaken(id, messageId, orderId, seller)
     }
 
     fun verifySavedOrder(id: Long, order: Order) {
-        store.verifySavedOrder(id, order)
+        assertEquals(id, savedOrder?.first)
+        assertEquals(order, savedOrder?.second)
     }
 
     fun verifyEmptyOrder() {
-        store.verifyEmptyStore()
+        assertNull(savedOrder)
+    }
+
+    fun verifyOrderTaken(id: Long, messageId: Long, orderId: Long, seller: Resident) {
+        assertEquals(id, takeOrder?.id)
+        assertEquals(messageId, takeOrder?.messageId)
+        assertEquals(orderId, takeOrder?.orderId)
+        assertEquals(seller, takeOrder?.seller)
     }
 
     fun tearDown() {
-        store.tearDown()
+        takeOrder = null
+        savedOrder = null
     }
+
+    data class OrderTaken(
+        val id: Long,
+        val messageId: Long,
+        val orderId: Long,
+        val seller: Resident
+    )
 }
