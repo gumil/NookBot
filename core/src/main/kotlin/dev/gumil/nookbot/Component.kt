@@ -73,7 +73,7 @@ internal object Component {
 
         install(Logging) {
             logger = Logger.DEFAULT
-            level = LogLevel.HEADERS
+            level = LogLevel.ALL
         }
     }
 }
