@@ -12,7 +12,6 @@ internal typealias CommandContent = Pair<String, String>
 
 internal fun MessageEntity.extractCommand(text: String): CommandContent {
     if (type != BOT_COMMAND) throw CommandParsingError.MessageEntityTypeNotSupported(type)
-    if (length >= text.trim().length) throw CommandParsingError.NoContent()
 
     val startIndex = offset + 1
     val endIndex = if (text.contains('@')) {
@@ -21,6 +20,13 @@ internal fun MessageEntity.extractCommand(text: String): CommandContent {
         length
     }
 
-    return text.substring(startIndex, endIndex).toLowerCase() to
-            text.substring(length + 1).toLowerCase()
+    val content = if (text.length == length) {
+        ""
+    } else {
+        text.substring(length).trim().toLowerCase()
+    }
+
+
+    return text.substring(startIndex, endIndex).toLowerCase() to content
+
 }

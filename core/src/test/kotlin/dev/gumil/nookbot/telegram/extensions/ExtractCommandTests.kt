@@ -64,7 +64,7 @@ internal class ExtractCommandTests {
     }
 
     @Test
-    fun `thows exception for command with no content`() {
+    fun `return blank content for command with no content`() {
         val type = BOT_COMMAND
         val command = Random.nextDouble().toString()
         val botName = Random.nextDouble().toString()
@@ -72,13 +72,15 @@ internal class ExtractCommandTests {
         val messageEntity =
             MessageEntity(0, commandCall.length, type)
 
-        assertThrows<CommandParsingError.NoContent> {
-            messageEntity.extractCommand(commandCall)
-        }
+        val actual = messageEntity.extractCommand(commandCall)
+
+        val expected = command to ""
+
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `thows exception for command with whitespace content`() {
+    fun `return blank content for command with whitespace content`() {
         val type = BOT_COMMAND
         val command = Random.nextDouble().toString()
         val botName = Random.nextDouble().toString()
@@ -87,8 +89,10 @@ internal class ExtractCommandTests {
         val messageEntity =
             MessageEntity(0, commandWithBotName.length, type)
 
-        assertThrows<CommandParsingError.NoContent> {
-            messageEntity.extractCommand(commandCall)
-        }
+        val actual = messageEntity.extractCommand(commandCall)
+
+        val expected = command to ""
+
+        assertEquals(expected, actual)
     }
 }

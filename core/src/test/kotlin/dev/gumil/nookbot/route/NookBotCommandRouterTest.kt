@@ -59,7 +59,7 @@ internal class NookBotCommandRouterTest {
     }
 
     @Test
-    fun `command order saves order`() = runBlocking {
+    fun `command order will save order`() = runBlocking {
         val name = Random.nextDouble().toString()
         val command = "order"
         val update = UpdateEntityFactory.getUpdate(command, name)
@@ -82,7 +82,22 @@ internal class NookBotCommandRouterTest {
     }
 
     @Test
-    fun `command take takes order`() = runBlocking {
+    fun `command order with blank content ignores order`() = runBlocking {
+        val name = ""
+        val command = "order"
+        val update = UpdateEntityFactory.getUpdate(command, name)
+
+        commandRouter.route(
+            update,
+            command,
+            name
+        )
+
+        ordersService.verifyEmptyOrder()
+    }
+
+    @Test
+    fun `command take will take orders`() = runBlocking {
         val name = Random.nextLong().toString()
         val command = "take"
         val update = UpdateEntityFactory.getUpdate(command, name)
@@ -102,6 +117,21 @@ internal class NookBotCommandRouterTest {
                 update.message!!.from!!.firstName
             )
         )
+    }
+
+    @Test
+    fun `command list will list orders`() = runBlocking {
+        val name = Random.nextLong().toString()
+        val command = "list"
+        val update = UpdateEntityFactory.getUpdate(command, name)
+
+        commandRouter.route(
+            update,
+            command,
+            name
+        )
+
+        ordersService.verifyListOrder(update.message!!.chat.id)
     }
 
     @AfterEach
