@@ -38,7 +38,7 @@ internal class NookBotCommandRouter(
 
         when (nookCommand) {
             Command.ORDER -> order(chatId, orderId, content, message.from)
-            Command.TAKE -> takeOrder(chatId, orderId, messageId, message.from)
+            Command.TAKE -> takeOrder(chatId, content.toLong(), messageId, message.from)
             Command.CANCEL -> TODO()
             Command.SENT -> TODO()
             Command.LIST -> TODO()

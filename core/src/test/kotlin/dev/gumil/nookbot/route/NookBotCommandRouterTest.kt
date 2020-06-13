@@ -83,7 +83,7 @@ internal class NookBotCommandRouterTest {
 
     @Test
     fun `command take takes order`() = runBlocking {
-        val name = Random.nextDouble().toString()
+        val name = Random.nextLong().toString()
         val command = "take"
         val update = UpdateEntityFactory.getUpdate(command, name)
 
@@ -96,7 +96,7 @@ internal class NookBotCommandRouterTest {
         ordersService.verifyOrderTaken(
             update.message!!.chat.id,
             update.message!!.messageId,
-            update.updateId,
+            name.toLong(),
             Resident(
                 update.message!!.from!!.id,
                 update.message!!.from!!.firstName
