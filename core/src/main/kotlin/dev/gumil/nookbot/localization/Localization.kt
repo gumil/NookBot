@@ -13,4 +13,6 @@ internal object Localization: LocalizationContract {
         get() = LocalizationEN.noPendingOrders
     override val userHasPendingOrder: String
         get() = LocalizationEN.userHasPendingOrder
+    override val userSentOrderToBuyer: String
+        get() = LocalizationEN.userSentOrderToBuyer
 }

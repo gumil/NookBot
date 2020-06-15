@@ -206,6 +206,60 @@ internal class TelegramOrdersServiceTest {
         telegramApi.verifyMessageSent(message)
     }
 
+    @Test
+    fun `sendOrder when order not found ignores operation`() = runBlocking {
+        val id = Random.nextLong()
+
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextDouble().toString()
+        )
+
+        telegramOrdersService.sendOrder(id, seller)
+
+        telegramApi.verifyNoMessageSent()
+        repository.verifyNoDeletedOrder()
+        // no further verification
+    }
+
+    @Test
+    fun `sendOrder deletes order and sends message`() = runBlocking {
+        val id = Random.nextLong()
+        val orderId = Random.nextLong()
+
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextDouble().toString()
+        )
+
+        val order = Order(
+            orderId,
+            Random.nextDouble().toString(),
+            buyer = Resident(
+                Random.nextLong(),
+                Random.nextDouble().toString()
+            ),
+            seller = seller
+        )
+
+        val messageSent = Message(
+            Random.nextLong(),
+            date = Random.nextLong(),
+            chat = Chat(
+                Random.nextLong(),
+                Chat.Type.GROUP
+            )
+        )
+
+        repository.givenOrder(order)
+        telegramApi.givenSentMessage(messageSent)
+
+        telegramOrdersService.sendOrder(id, seller)
+
+        repository.verifyDeletedOrder(order)
+        telegramApi.verifyMessageSent(messageSent)
+    }
+
     @AfterEach
     fun tearDown() {
         telegramApi.tearDown()

@@ -23,6 +23,10 @@ internal class FakeOrdersService: OrdersService {
         listOrderId = chatId
     }
 
+    override suspend fun sendOrder(chatId: Long, seller: Resident) {
+        TODO("Not yet implemented")
+    }
+
     fun verifySavedOrder(chatId: Long, order: Order) {
         assertEquals(chatId, savedOrder?.first)
         assertEquals(order, savedOrder?.second)

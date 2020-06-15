@@ -7,4 +7,5 @@ interface LocalizationContract {
     val listOrderWithSellerItemBuyer: String
     val noPendingOrders: String
     val userHasPendingOrder: String
+    val userSentOrderToBuyer: String
 }

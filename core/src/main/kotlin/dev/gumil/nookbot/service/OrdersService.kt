@@ -10,4 +10,6 @@ interface OrdersService {
     suspend fun takeOrder(chatId: Long, messageId: Long, orderId: Long, seller: Resident)
 
     suspend fun listOrder(chatId: Long)
+
+    suspend fun sendOrder(chatId: Long, seller: Resident)
 }

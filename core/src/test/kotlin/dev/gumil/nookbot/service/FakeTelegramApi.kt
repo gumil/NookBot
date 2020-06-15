@@ -7,6 +7,7 @@ import dev.gumil.nookbot.telegram.request.EditMessageRequest
 import dev.gumil.nookbot.telegram.request.SendMessageRequest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 
 internal class FakeTelegramApi : TelegramApi {
 
@@ -50,6 +51,10 @@ internal class FakeTelegramApi : TelegramApi {
 
     fun verifyMessageSent(message: Message) {
         assertEquals(message, actualMessageSent)
+    }
+
+    fun verifyNoMessageSent() {
+        assertNull(actualMessageSent)
     }
 
     fun verifyMessageEdited(message: Message) {

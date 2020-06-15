@@ -7,6 +7,7 @@ import dev.gumil.nookbot.telegram.entities.InlineKeyboardMarkup
 import dev.gumil.nookbot.localization.Localization
 import dev.gumil.nookbot.repository.OrderId
 import dev.gumil.nookbot.repository.OrdersRepository
+import dev.gumil.nookbot.repository.SellerId
 import dev.gumil.nookbot.route.Command
 import dev.gumil.nookbot.telegram.TelegramApi
 import dev.gumil.nookbot.telegram.request.EditMessageRequest
@@ -94,6 +95,29 @@ internal class TelegramOrdersService(
         telegramApi.sendMessage(SendMessageRequest(chatId.toString(), builder.toString()))
     }
 
+    override suspend fun sendOrder(chatId: Long, seller: Resident) {
+        val order = repository.getOrder(chatId, SellerId(seller.id))
+
+        if (order == null) {
+            logger.info("Order not found")
+            return
+        }
+
+        repository.deleteOrder(chatId, order)
+
+        telegramApi.sendMessage(
+            SendMessageRequest(
+                chatId.toString(),
+                String.format(
+                    Localization.userSentOrderToBuyer,
+                    seller.name,
+                    order.name,
+                    order.buyer.name
+                )
+            )
+        )
+    }
+
     private fun getOrderPlacedText(order: Order): String {
         return String.format(
             Localization.orderPlaced,
@@ -103,15 +127,11 @@ internal class TelegramOrdersService(
     }
 
     private fun getTakeOrderMarkup(order: Order): InlineKeyboardMarkup {
-        return InlineKeyboardMarkup(
-            listOf(
-                listOf(
+        return InlineKeyboardMarkup(listOf(listOf(
                     InlineKeyboardButton(
                         Localization.takeOrder,
                         "/${Command.TAKE.name} ${order.id}"
                     )
-                )
-            )
-        )
+                )))
     }
 }

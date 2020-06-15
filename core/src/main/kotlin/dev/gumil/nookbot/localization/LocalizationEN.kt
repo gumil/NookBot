@@ -13,4 +13,6 @@ internal object LocalizationEN: LocalizationContract {
         get() = "No pending orders"
     override val userHasPendingOrder: String
         get() = "@%s you have a pending order. Make sure to deliver it first before taking a new one."
+    override val userSentOrderToBuyer: String
+        get() = "@%s have sent the %s order to @%s."
 }

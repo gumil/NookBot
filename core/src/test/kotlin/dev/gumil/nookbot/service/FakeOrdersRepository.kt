@@ -13,6 +13,7 @@ internal class FakeOrdersRepository: OrdersRepository {
     private var savedOrder: Pair<Long, Order>? = null
     private var givenOrder: Order? = null
     private var hasPendingOrder = false
+    private var orderToBeDeleted: Order? = null
 
     override fun save(id: Long, order: Order) {
         savedOrder = id to order
@@ -27,7 +28,7 @@ internal class FakeOrdersRepository: OrdersRepository {
     }
 
     override fun getOrder(chatId: Long, seller: SellerId): Order? {
-        TODO("Not yet implemented")
+        return givenOrder
     }
 
     override fun hasPendingOrder(chatId: Long, seller: Resident): Boolean {
@@ -35,7 +36,8 @@ internal class FakeOrdersRepository: OrdersRepository {
     }
 
     override fun deleteOrder(id: Long, order: Order): Boolean {
-        TODO()
+        orderToBeDeleted = order
+        return true
     }
 
     fun givenHasPendingOrder(hasPendingOrder: Boolean) {
@@ -67,10 +69,19 @@ internal class FakeOrdersRepository: OrdersRepository {
         assertEquals(orders, ordersList)
     }
 
+    fun verifyDeletedOrder(order: Order) {
+        assertEquals(order, orderToBeDeleted)
+    }
+
+    fun verifyNoDeletedOrder() {
+        assertNull(orderToBeDeleted)
+    }
+
     fun tearDown() {
         savedOrder = null
         ordersList = null
         givenOrder = null
         hasPendingOrder = false
+        orderToBeDeleted = null
     }
 }
