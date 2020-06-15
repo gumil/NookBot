@@ -174,17 +174,47 @@ internal class InMemoryOrdersRepositoryTest {
         assertFalse(actual)
     }
 
-    private fun createOrder(id: Long = Random.nextLong()): Order {
+    @Test
+    fun `get order with seller id returns specific order`() {
+        val chatId = Random.nextLong()
+        val orderId = Random.nextLong()
+        val sellerId = Random.nextLong()
+        val order = createOrder(orderId, sellerId)
+
+        ordersRepository.save(chatId, order)
+        val actual = ordersRepository.getOrder(chatId, SellerId(sellerId))
+
+        assertEquals(order, actual)
+    }
+
+    @Test
+    fun `get order with seller id when order not found returns null`() {
+        val chatId = Random.nextLong()
+        val orderId = Random.nextLong()
+        val sellerId = Random.nextLong()
+        val otherSellerId = Random.nextLong()
+        val order = createOrder(orderId, sellerId)
+
+        ordersRepository.save(chatId, order)
+        val actual = ordersRepository.getOrder(chatId, SellerId(otherSellerId))
+
+        assertNull(actual)
+    }
+
+    private fun createOrder(
+        orderId: Long = Random.nextLong(),
+        sellerId: Long = Random.nextLong()
+    ): Order {
         val buyer = Resident(
             Random.nextLong(),
             "buyer"
         )
         val seller = Resident(
-            Random.nextLong(),
+            sellerId,
             "seller"
         )
         return Order(
-            id,
+            orderId,
             Random.nextDouble().toString(),
             Random.nextBoolean(),
             buyer,
