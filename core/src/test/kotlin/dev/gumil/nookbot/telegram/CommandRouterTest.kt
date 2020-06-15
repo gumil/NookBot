@@ -61,16 +61,6 @@ internal class CommandRouterTest {
     }
 
     @Test
-    fun `handle NoContent error`() = runBlocking {
-        val command = Random.nextDouble().toString()
-        val update = UpdateEntityFactory.getUpdate(command, "")
-
-        commandRouter.route(update)
-
-        commandRouter.verifyError<CommandParsingError.NoContent>()
-    }
-
-    @Test
     fun `handle callback query when text is null`() = runBlocking {
         val update = getUpdateCallbackQuery(null)
 
