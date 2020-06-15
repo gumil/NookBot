@@ -31,6 +31,19 @@ internal class InMemoryOrdersRepositoryTest {
     }
 
     @Test
+    fun `save with same order should overwrite order`() {
+        val chatId = Random.nextLong()
+        val order = createOrder()
+        val newOrder = order.copy(seller = Resident(Random.nextLong(), Random.nextInt().toString()))
+
+        ordersRepository.save(chatId, order)
+        ordersRepository.save(chatId, newOrder)
+        val actual = ordersRepository.getOrders(chatId)
+
+        assertEquals(listOf(newOrder), actual)
+    }
+
+    @Test
     fun `delete order removes order from list`() {
         val chatId = Random.nextLong()
         val order = createOrder()

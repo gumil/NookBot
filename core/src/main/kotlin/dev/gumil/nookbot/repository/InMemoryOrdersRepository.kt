@@ -8,7 +8,21 @@ internal class InMemoryOrdersRepository : OrdersRepository {
     private val ordersMap = mutableMapOf<Long, MutableList<Order>>()
 
     override fun save(id: Long, order: Order) {
-        ordersMap[id]?.add(order) ?: ordersMap.put(id, mutableListOf(order))
+        val orders = ordersMap[id]
+
+        if (orders == null) {
+            ordersMap[id] = mutableListOf(order)
+            return
+        }
+
+        val indexOrder = orders.indexOfFirst { it.id == order.id }
+
+        if (indexOrder > -1) {
+            orders[indexOrder] = order
+            return
+        }
+
+        orders.add(order)
     }
 
     override fun getOrders(id: Long): List<Order>? {
