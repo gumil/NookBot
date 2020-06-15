@@ -1,6 +1,7 @@
 package dev.gumil.nookbot.repository
 
 import dev.gumil.nookbot.entities.Order
+import dev.gumil.nookbot.entities.Resident
 
 internal class InMemoryOrdersRepository : OrdersRepository {
 
@@ -16,6 +17,12 @@ internal class InMemoryOrdersRepository : OrdersRepository {
 
     override fun getOrder(chatId: Long, orderId: Long): Order? {
         return getOrders(chatId)?.find { it.id == orderId }
+    }
+
+    override fun hasPendingOrder(chatId: Long, seller: Resident): Boolean {
+        return getOrders(chatId)?.any { order ->
+            seller == order.seller
+        } ?: false
     }
 
     override fun deleteOrder(id: Long, order: Order): Boolean {

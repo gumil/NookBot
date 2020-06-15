@@ -95,6 +95,72 @@ internal class InMemoryOrdersRepositoryTest {
         assertNull(actual)
     }
 
+    @Test
+    fun `hasPendingOrders returns true when there is an order`() {
+        val chatId = Random.nextLong()
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextInt().toString()
+        )
+        val order = Order(
+            Random.nextLong(),
+            Random.nextInt().toString(),
+            false,
+            Resident(
+                Random.nextLong(),
+                Random.nextInt().toString()
+            ),
+            seller
+        )
+
+        ordersRepository.save(chatId, order)
+
+        val actual = ordersRepository.hasPendingOrder(chatId, seller)
+
+        assertTrue(actual)
+    }
+
+    @Test
+    fun `hasPendingOrders returns false when order is empty`() {
+        val chatId = Random.nextLong()
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextInt().toString()
+        )
+        val actual = ordersRepository.hasPendingOrder(chatId, seller)
+
+        assertFalse(actual)
+    }
+
+    @Test
+    fun `hasPendingOrders returns false when order not found`() {
+        val chatId = Random.nextLong()
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextInt().toString()
+        )
+        val sellerWithOrder = Resident(
+            Random.nextLong(),
+            Random.nextInt().toString()
+        )
+        val order = Order(
+            Random.nextLong(),
+            Random.nextInt().toString(),
+            false,
+            Resident(
+                Random.nextLong(),
+                Random.nextInt().toString()
+            ),
+            sellerWithOrder
+        )
+
+        ordersRepository.save(chatId, order)
+
+        val actual = ordersRepository.hasPendingOrder(chatId, seller)
+
+        assertFalse(actual)
+    }
+
     private fun createOrder(id: Long = Random.nextLong()): Order {
         val buyer = Resident(
             Random.nextLong(),

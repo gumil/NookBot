@@ -37,6 +37,21 @@ internal class TelegramOrdersService(
             return
         }
 
+        val hasPendingOrder = repository.hasPendingOrder(id, seller)
+
+        if (hasPendingOrder) {
+            telegramApi.sendMessage(
+                SendMessageRequest(
+                    id.toString(),
+                    String.format(
+                        Localization.userHasPendingOrder,
+                        seller.name
+                    )
+                )
+            )
+            return
+        }
+
         repository.save(id, order.copy(seller = seller))
         telegramApi.editMessageMarkUp(EditMessageRequest(id.toString(), messageId))
         telegramApi.sendMessage(
@@ -64,9 +79,9 @@ internal class TelegramOrdersService(
             if (order.seller != null) {
                 builder.append(String.format(
                     Localization.listOrderWithSellerItemBuyer,
-                    "@${order.seller.name}",
+                    order.seller.name,
                     order.name,
-                    "@${order.buyer.name}"
+                    order.buyer.name
                 ))
             } else {
                 builder.append(

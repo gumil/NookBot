@@ -58,6 +58,7 @@ internal class TelegramOrdersServiceTest {
         telegramOrdersService.takeOrder(id, messageId, orderId, resident)
 
         repository.verifyEmptyOrders()
+        repository.verifyNoOrderSaved()
         // no further verification
     }
 
@@ -110,6 +111,45 @@ internal class TelegramOrdersServiceTest {
         repository.verifySavedOrder(id, orderWithSeller)
         telegramApi.verifyMessageEdited(messageEdited)
         telegramApi.verifyMessageSent(messageSent)
+    }
+
+    @Test
+    fun `takeOrder when seller has pending order send error message`() = runBlocking {
+        val id = Random.nextLong()
+        val messageId = Random.nextLong()
+        val orderId = Random.nextLong()
+
+        val order = Order(
+            orderId,
+            Random.nextDouble().toString(),
+            buyer = Resident(
+                Random.nextLong(),
+                Random.nextDouble().toString()
+            )
+        )
+
+        val errorMessage = Message(
+            Random.nextLong(),
+            date = Random.nextLong(),
+            chat = Chat(
+                Random.nextLong(),
+                Chat.Type.GROUP
+            )
+        )
+
+        val seller = Resident(
+            Random.nextLong(),
+            Random.nextDouble().toString()
+        )
+
+        repository.givenOrder(order)
+        repository.givenHasPendingOrder(true)
+        telegramApi.givenSentMessage(errorMessage)
+
+        telegramOrdersService.takeOrder(id, messageId, orderId, seller)
+
+        repository.verifyNoOrderSaved()
+        telegramApi.verifyMessageSent(errorMessage)
     }
 
     @Test
