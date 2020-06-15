@@ -11,20 +11,20 @@ internal class FakeOrdersService: OrdersService {
     private var takeOrder: OrderTaken? = null
     private var listOrderId: Long? = null
 
-    override suspend fun saveOrder(id: Long, order: Order) {
-        savedOrder = id to order
+    override suspend fun saveOrder(chatId: Long, order: Order) {
+        savedOrder = chatId to order
     }
 
-    override suspend fun takeOrder(id: Long, messageId: Long, orderId: Long, seller: Resident) {
-        takeOrder = OrderTaken(id, messageId, orderId, seller)
+    override suspend fun takeOrder(chatId: Long, messageId: Long, orderId: Long, seller: Resident) {
+        takeOrder = OrderTaken(chatId, messageId, orderId, seller)
     }
 
-    override suspend fun listOrder(id: Long) {
-        listOrderId = id
+    override suspend fun listOrder(chatId: Long) {
+        listOrderId = chatId
     }
 
-    fun verifySavedOrder(id: Long, order: Order) {
-        assertEquals(id, savedOrder?.first)
+    fun verifySavedOrder(chatId: Long, order: Order) {
+        assertEquals(chatId, savedOrder?.first)
         assertEquals(order, savedOrder?.second)
     }
 
@@ -32,15 +32,15 @@ internal class FakeOrdersService: OrdersService {
         assertNull(savedOrder)
     }
 
-    fun verifyOrderTaken(id: Long, messageId: Long, orderId: Long, seller: Resident) {
-        assertEquals(id, takeOrder?.id)
+    fun verifyOrderTaken(chatId: Long, messageId: Long, orderId: Long, seller: Resident) {
+        assertEquals(chatId, takeOrder?.id)
         assertEquals(messageId, takeOrder?.messageId)
         assertEquals(orderId, takeOrder?.orderId)
         assertEquals(seller, takeOrder?.seller)
     }
 
-    fun verifyListOrder(id: Long) {
-        assertEquals(id, listOrderId)
+    fun verifyListOrder(chatId: Long) {
+        assertEquals(chatId, listOrderId)
     }
 
     fun tearDown() {

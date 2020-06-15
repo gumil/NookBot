@@ -5,9 +5,9 @@ import dev.gumil.nookbot.entities.Resident
 
 interface OrdersService {
 
-    suspend fun saveOrder(id: Long, order: Order)
+    suspend fun saveOrder(chatId: Long, order: Order)
 
-    suspend fun takeOrder(id: Long, messageId: Long, orderId: Long, seller: Resident)
+    suspend fun takeOrder(chatId: Long, messageId: Long, orderId: Long, seller: Resident)
 
-    suspend fun listOrder(id: Long)
+    suspend fun listOrder(chatId: Long)
 }

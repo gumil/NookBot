@@ -18,31 +18,31 @@ internal class TelegramOrdersService(
 ) : OrdersService {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    override suspend fun saveOrder(id: Long, order: Order) {
-        repository.save(id, order)
+    override suspend fun saveOrder(chatId: Long, order: Order) {
+        repository.save(chatId, order)
         telegramApi.sendMessage(
             SendMessageRequest(
-                id.toString(),
+                chatId.toString(),
                 getOrderPlacedText(order),
                 getTakeOrderMarkup(order)
             )
         )
     }
 
-    override suspend fun takeOrder(id: Long, messageId: Long, orderId: Long, seller: Resident) {
-        val order = repository.getOrder(id, orderId)
+    override suspend fun takeOrder(chatId: Long, messageId: Long, orderId: Long, seller: Resident) {
+        val order = repository.getOrder(chatId, orderId)
 
         if (order == null) {
             logger.info("Order not found")
             return
         }
 
-        val hasPendingOrder = repository.hasPendingOrder(id, seller)
+        val hasPendingOrder = repository.hasPendingOrder(chatId, seller)
 
         if (hasPendingOrder) {
             telegramApi.sendMessage(
                 SendMessageRequest(
-                    id.toString(),
+                    chatId.toString(),
                     String.format(
                         Localization.userHasPendingOrder,
                         seller.name
@@ -52,11 +52,11 @@ internal class TelegramOrdersService(
             return
         }
 
-        repository.save(id, order.copy(seller = seller))
-        telegramApi.editMessageMarkUp(EditMessageRequest(id.toString(), messageId))
+        repository.save(chatId, order.copy(seller = seller))
+        telegramApi.editMessageMarkUp(EditMessageRequest(chatId.toString(), messageId))
         telegramApi.sendMessage(
             SendMessageRequest(
-                id.toString(),
+                chatId.toString(),
                 String.format(
                     Localization.orderTaken,
                     seller.name
@@ -65,11 +65,11 @@ internal class TelegramOrdersService(
         )
     }
 
-    override suspend fun listOrder(id: Long) {
-        val orders = repository.getOrders(id)
+    override suspend fun listOrder(chatId: Long) {
+        val orders = repository.getOrders(chatId)
 
         if (orders.isNullOrEmpty()) {
-            telegramApi.sendMessage(SendMessageRequest(id.toString(), Localization.noPendingOrders))
+            telegramApi.sendMessage(SendMessageRequest(chatId.toString(), Localization.noPendingOrders))
             return
         }
 
@@ -90,7 +90,7 @@ internal class TelegramOrdersService(
             }
             builder.append("\n")
         }
-        telegramApi.sendMessage(SendMessageRequest(id.toString(), builder.toString()))
+        telegramApi.sendMessage(SendMessageRequest(chatId.toString(), builder.toString()))
     }
 
     private fun getOrderPlacedText(order: Order): String {
