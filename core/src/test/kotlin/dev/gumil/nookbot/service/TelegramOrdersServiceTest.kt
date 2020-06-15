@@ -215,7 +215,7 @@ internal class TelegramOrdersServiceTest {
             Random.nextDouble().toString()
         )
 
-        telegramOrdersService.sendOrder(id, seller)
+        telegramOrdersService.markOrderSent(id, seller)
 
         telegramApi.verifyNoMessageSent()
         repository.verifyNoDeletedOrder()
@@ -254,7 +254,7 @@ internal class TelegramOrdersServiceTest {
         repository.givenOrder(order)
         telegramApi.givenSentMessage(messageSent)
 
-        telegramOrdersService.sendOrder(id, seller)
+        telegramOrdersService.markOrderSent(id, seller)
 
         repository.verifyDeletedOrder(order)
         telegramApi.verifyMessageSent(messageSent)

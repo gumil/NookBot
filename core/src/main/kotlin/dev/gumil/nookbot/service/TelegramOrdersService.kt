@@ -95,7 +95,7 @@ internal class TelegramOrdersService(
         telegramApi.sendMessage(SendMessageRequest(chatId.toString(), builder.toString()))
     }
 
-    override suspend fun sendOrder(chatId: Long, seller: Resident) {
+    override suspend fun markOrderSent(chatId: Long, seller: Resident) {
         val order = repository.getOrder(chatId, SellerId(seller.id))
 
         if (order == null) {
