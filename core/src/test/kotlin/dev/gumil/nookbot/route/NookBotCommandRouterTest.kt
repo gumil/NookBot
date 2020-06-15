@@ -134,6 +134,27 @@ internal class NookBotCommandRouterTest {
         ordersService.verifyListOrder(update.message!!.chat.id)
     }
 
+    @Test
+    fun `command send will mark order as sent`() = runBlocking {
+        val name = Random.nextLong().toString()
+        val command = "sent"
+        val update = UpdateEntityFactory.getUpdate(command, name)
+
+        commandRouter.route(
+            update,
+            command,
+            name
+        )
+
+        ordersService.verifySentOrder(
+            update.message!!.chat.id,
+            Resident(
+                update.message!!.from!!.id,
+                update.message!!.from!!.firstName
+            )
+        )
+    }
+
     @AfterEach
     fun tearDown() {
         ordersService.tearDown()

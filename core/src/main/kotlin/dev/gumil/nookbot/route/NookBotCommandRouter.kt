@@ -40,7 +40,7 @@ internal class NookBotCommandRouter(
             Command.ORDER -> order(chatId, orderId, content, message.from)
             Command.TAKE -> takeOrder(chatId, content.toLong(), messageId, message.from)
             Command.CANCEL -> TODO()
-            Command.SENT -> TODO()
+            Command.SENT -> markOrderSent(chatId, message.from)
             Command.LIST -> listOrders(chatId)
         }
     }
@@ -68,6 +68,16 @@ internal class NookBotCommandRouter(
             chatId,
             messageId,
             orderId,
+            Resident(
+                user.id,
+                user.username ?: user.firstName
+            )
+        )
+    }
+
+    private suspend fun markOrderSent(chatId: Long, user: User) {
+        ordersService.markOrderSent(
+            chatId,
             Resident(
                 user.id,
                 user.username ?: user.firstName

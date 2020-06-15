@@ -10,6 +10,7 @@ internal class FakeOrdersService: OrdersService {
     private var savedOrder: Pair<Long, Order>? = null
     private var takeOrder: OrderTaken? = null
     private var listOrderId: Long? = null
+    private var sentOrder: Pair<Long, Resident>? = null
 
     override suspend fun saveOrder(chatId: Long, order: Order) {
         savedOrder = chatId to order
@@ -23,8 +24,8 @@ internal class FakeOrdersService: OrdersService {
         listOrderId = chatId
     }
 
-    override suspend fun sendOrder(chatId: Long, seller: Resident) {
-        TODO("Not yet implemented")
+    override suspend fun markOrderSent(chatId: Long, seller: Resident) {
+        sentOrder = chatId to seller
     }
 
     fun verifySavedOrder(chatId: Long, order: Order) {
@@ -47,9 +48,15 @@ internal class FakeOrdersService: OrdersService {
         assertEquals(chatId, listOrderId)
     }
 
+    fun verifySentOrder(chatId: Long, seller: Resident) {
+        assertEquals(chatId, sentOrder?.first)
+        assertEquals(seller, sentOrder?.second)
+    }
+
     fun tearDown() {
         takeOrder = null
         savedOrder = null
+        sentOrder = null
     }
 
     data class OrderTaken(
