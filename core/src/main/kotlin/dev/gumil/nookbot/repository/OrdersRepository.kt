@@ -9,9 +9,14 @@ interface OrdersRepository {
 
     fun getOrders(id: Long): List<Order>?
 
-    fun getOrder(chatId: Long, orderId: Long): Order?
+    fun getOrder(chatId: Long, orderId: OrderId): Order?
+
+    fun getOrder(chatId: Long, seller: SellerId): Order?
 
     fun hasPendingOrder(chatId: Long, seller: Resident): Boolean
 
     fun deleteOrder(id: Long, order: Order): Boolean
 }
+
+inline class OrderId(val id: Long)
+inline class SellerId(val id: Long)

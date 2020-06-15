@@ -2,7 +2,9 @@ package dev.gumil.nookbot.service
 
 import dev.gumil.nookbot.entities.Order
 import dev.gumil.nookbot.entities.Resident
+import dev.gumil.nookbot.repository.OrderId
 import dev.gumil.nookbot.repository.OrdersRepository
+import dev.gumil.nookbot.repository.SellerId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 
@@ -20,8 +22,12 @@ internal class FakeOrdersRepository: OrdersRepository {
         return ordersList
     }
 
-    override fun getOrder(chatId: Long, orderId: Long): Order? {
+    override fun getOrder(chatId: Long, orderId: OrderId): Order? {
         return givenOrder
+    }
+
+    override fun getOrder(chatId: Long, seller: SellerId): Order? {
+        TODO("Not yet implemented")
     }
 
     override fun hasPendingOrder(chatId: Long, seller: Resident): Boolean {

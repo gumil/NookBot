@@ -28,12 +28,14 @@ dependencies {
 compileKotlin {
     kotlinOptions {
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-XXLanguage:+InlineClasses"
         jvmTarget = "1.8"
     }
 }
 compileTestKotlin {
     kotlinOptions {
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-XXLanguage:+InlineClasses"
         jvmTarget = "1.8"
     }
 }

@@ -5,6 +5,7 @@ import dev.gumil.nookbot.entities.Resident
 import dev.gumil.nookbot.telegram.entities.InlineKeyboardButton
 import dev.gumil.nookbot.telegram.entities.InlineKeyboardMarkup
 import dev.gumil.nookbot.localization.Localization
+import dev.gumil.nookbot.repository.OrderId
 import dev.gumil.nookbot.repository.OrdersRepository
 import dev.gumil.nookbot.route.Command
 import dev.gumil.nookbot.telegram.TelegramApi
@@ -30,7 +31,7 @@ internal class TelegramOrdersService(
     }
 
     override suspend fun takeOrder(chatId: Long, messageId: Long, orderId: Long, seller: Resident) {
-        val order = repository.getOrder(chatId, orderId)
+        val order = repository.getOrder(chatId, OrderId(orderId))
 
         if (order == null) {
             logger.info("Order not found")
@@ -96,7 +97,7 @@ internal class TelegramOrdersService(
     private fun getOrderPlacedText(order: Order): String {
         return String.format(
             Localization.orderPlaced,
-            "@${order.buyer.name}",
+            order.buyer.name,
             order.name
         )
     }

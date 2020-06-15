@@ -91,7 +91,7 @@ internal class InMemoryOrdersRepositoryTest {
         val order = createOrder(orderId)
 
         ordersRepository.save(chatId, order)
-        val actual = ordersRepository.getOrder(chatId, orderId)
+        val actual = ordersRepository.getOrder(chatId, OrderId(orderId))
 
         assertEquals(order, actual)
     }
@@ -103,7 +103,7 @@ internal class InMemoryOrdersRepositoryTest {
         val order = createOrder()
 
         ordersRepository.save(chatId, order)
-        val actual = ordersRepository.getOrder(chatId, otherOrderId)
+        val actual = ordersRepository.getOrder(chatId, OrderId(otherOrderId))
 
         assertNull(actual)
     }

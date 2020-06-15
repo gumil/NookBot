@@ -29,8 +29,12 @@ internal class InMemoryOrdersRepository : OrdersRepository {
         return ordersMap[id]
     }
 
-    override fun getOrder(chatId: Long, orderId: Long): Order? {
-        return getOrders(chatId)?.find { it.id == orderId }
+    override fun getOrder(chatId: Long, orderId: OrderId): Order? {
+        return getOrders(chatId)?.find { it.id == orderId.id }
+    }
+
+    override fun getOrder(chatId: Long, seller: SellerId): Order? {
+        return getOrders(chatId)?.find { it.seller?.id == seller.id }
     }
 
     override fun hasPendingOrder(chatId: Long, seller: Resident): Boolean {
