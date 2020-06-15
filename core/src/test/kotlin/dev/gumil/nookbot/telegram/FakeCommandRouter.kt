@@ -3,7 +3,6 @@ package dev.gumil.nookbot.telegram
 import dev.gumil.nookbot.telegram.entities.Update
 import dev.gumil.nookbot.telegram.exceptions.CommandParsingError
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 
 class FakeCommandRouter: CommandRouter {
     private var parsingError: CommandParsingError? = null
