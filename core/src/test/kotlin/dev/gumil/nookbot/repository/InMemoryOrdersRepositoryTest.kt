@@ -118,7 +118,6 @@ internal class InMemoryOrdersRepositoryTest {
         val order = Order(
             Random.nextLong(),
             Random.nextInt().toString(),
-            false,
             Resident(
                 Random.nextLong(),
                 Random.nextInt().toString()
@@ -159,7 +158,6 @@ internal class InMemoryOrdersRepositoryTest {
         val order = Order(
             Random.nextLong(),
             Random.nextInt().toString(),
-            false,
             Resident(
                 Random.nextLong(),
                 Random.nextInt().toString()
@@ -216,7 +214,6 @@ internal class InMemoryOrdersRepositoryTest {
         return Order(
             orderId,
             Random.nextDouble().toString(),
-            Random.nextBoolean(),
             buyer,
             seller
         )
