@@ -1,5 +1,6 @@
 import java.net.URI
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import io.kotless.plugin.gradle.dsl.kotless
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
@@ -15,6 +16,23 @@ repositories {
     jcenter()
     maven {
         url = URI("http://dynamodb-local.s3-website-us-west-2.amazonaws.com/release")
+    }
+}
+
+kotless {
+    config {
+        bucket = "dev.gumil.nookbot"
+
+        terraform {
+            profile = "default"
+            region = "us-east-1"
+        }
+    }
+
+    extensions {
+        local {
+            useAWSEmulation = true
+        }
     }
 }
 
