@@ -68,13 +68,17 @@ internal object Component {
     }
 
     @OptIn(UnstableDefault::class)
+    fun provideJsonConfiguration(): Json {
+        return Json(JsonConfiguration(
+            encodeDefaults = false,
+            ignoreUnknownKeys = true
+        ))
+    }
+
     private fun HttpClientConfig<*>.applyConfigurations() {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
-                Json(JsonConfiguration(
-                    encodeDefaults = false,
-                    ignoreUnknownKeys = true
-                ))
+                provideJsonConfiguration()
             )
         }
 
