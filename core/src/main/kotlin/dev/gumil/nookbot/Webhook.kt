@@ -1,7 +1,6 @@
 package dev.gumil.nookbot
 
 import dev.gumil.nookbot.telegram.entities.Update
-import dev.gumil.nookbot.telegram.response.HttpResponse
 import io.kotless.dsl.lang.KotlessContext
 import io.kotless.dsl.lang.http.Post
 import kotlinx.coroutines.runBlocking
