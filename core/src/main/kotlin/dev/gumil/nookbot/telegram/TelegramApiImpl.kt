@@ -26,7 +26,7 @@ internal class TelegramApiImpl(
         val urlString = baseUrl + getUpdates
         val query = "?offset=$offset" +
                 "&timeout=$timeout" +
-                "&allowed_updates=[message]"
+                "&allowed_updates=[u]"
         val httpResponse = httpClient.get<HttpResponse<List<Update>>>(
             urlString + query
         )
