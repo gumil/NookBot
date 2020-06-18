@@ -1,5 +1,7 @@
 package dev.gumil.nookbot
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
+import dev.gumil.nookbot.repository.DynamoOrdersRepository
 import dev.gumil.nookbot.repository.InMemoryOrdersRepository
 import dev.gumil.nookbot.repository.OrdersRepository
 import dev.gumil.nookbot.telegram.CommandRouter
@@ -45,7 +47,9 @@ internal object Component {
     }
 
     fun provideOrdersRepository(): OrdersRepository {
-        return InMemoryOrdersRepository()
+        return DynamoOrdersRepository(
+            AmazonDynamoDBClientBuilder.defaultClient()
+        )
     }
 
     fun provideOrdersService(
