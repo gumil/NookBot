@@ -27,7 +27,7 @@ jobs:
     - name: Run tests
       run: ./gradlew test
     - name: Run detekt with reviewdog
-      uses: DominuS-RU/Detekt-Action@v0.1
+      uses: gumil/Detekt-Action@v0.1.1
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           detekt_config: config/detekt/detekt.yml
