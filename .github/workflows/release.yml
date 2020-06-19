@@ -6,6 +6,9 @@ on:
 
 name: Create Release
 
+env:
+  NOOK_BOT: ${{ secrets.NOOK_BOT }}
+
 jobs:
   build:
     name: Create Release

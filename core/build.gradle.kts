@@ -21,6 +21,12 @@ repositories {
 }
 
 kotless {
+    webapp {
+        lambda {
+            environment["NOOK_BOT"] = (System.getenv("NOOK_BOT"))
+        }
+    }
+
     config {
         bucket = "dev.gumil.nookbot"
 
