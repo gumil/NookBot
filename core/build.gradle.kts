@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.3.72"
     id("io.kotless") version "0.1.5"
+    id("io.gitlab.arturbosch.detekt") version "1.10.0-RC1"
 }
 
 group = "dev.gumil.nookbot"
@@ -52,6 +53,8 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
 
     testImplementation("com.amazonaws:DynamoDBLocal:1.12.0")
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.10.0-RC1")
 }
 
 val copyNativeDeps by tasks.creating(Copy::class) {

@@ -3,10 +3,11 @@ package dev.gumil.nookbot
 import io.ktor.client.features.ClientRequestException
 import kotlinx.coroutines.runBlocking
 
+@Suppress("MagicNumber")
 fun main() = runBlocking {
     val api = Component.provideTelegramApi()
     val router = Component.provideCommandRouter()
-    val timeout = 10 //seconds
+    val timeout = 10 // seconds
     var offset = 0L
 
     while (true) {

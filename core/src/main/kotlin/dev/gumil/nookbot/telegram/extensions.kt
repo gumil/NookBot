@@ -26,7 +26,5 @@ internal fun MessageEntity.extractCommand(text: String): CommandContent {
         text.substring(length).trim().toLowerCase()
     }
 
-
     return text.substring(startIndex, endIndex).toLowerCase() to content
-
 }

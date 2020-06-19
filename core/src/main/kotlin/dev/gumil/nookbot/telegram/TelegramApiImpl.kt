@@ -13,7 +13,7 @@ import io.ktor.http.HttpHeaders
 
 internal class TelegramApiImpl(
     private val httpClient: HttpClient
-): TelegramApi {
+) : TelegramApi {
 
     private val token = System.getenv("NOOK_BOT")
     private val baseUrl = "https://api.telegram.org/bot$token/"

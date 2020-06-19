@@ -2,12 +2,11 @@ package dev.gumil.nookbot
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import dev.gumil.nookbot.repository.DynamoOrdersRepository
-import dev.gumil.nookbot.repository.InMemoryOrdersRepository
 import dev.gumil.nookbot.repository.OrdersRepository
-import dev.gumil.nookbot.telegram.CommandRouter
 import dev.gumil.nookbot.route.NookBotCommandRouter
 import dev.gumil.nookbot.service.OrdersService
 import dev.gumil.nookbot.service.TelegramOrdersService
+import dev.gumil.nookbot.telegram.CommandRouter
 import dev.gumil.nookbot.telegram.TelegramApi
 import dev.gumil.nookbot.telegram.TelegramApiImpl
 import io.ktor.client.HttpClient

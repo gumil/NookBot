@@ -30,7 +30,6 @@ internal class DynamoOrdersRepository(
             return
         }
 
-
         orders.add(orderDocument)
 
         mapper.save(NookBotTable(id, orders))

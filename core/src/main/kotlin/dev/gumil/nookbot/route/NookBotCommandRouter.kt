@@ -12,9 +12,10 @@ import org.slf4j.LoggerFactory
 
 internal class NookBotCommandRouter(
     private val ordersService: OrdersService
-): CommandRouter {
+) : CommandRouter {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
+    @Suppress("ReturnCount")
     override suspend fun route(update: Update, command: String, content: String) {
         // Ignore updates with no message
         val message = update.message
@@ -39,7 +40,9 @@ internal class NookBotCommandRouter(
         when (nookCommand) {
             Command.ORDER -> order(chatId, orderId, content, message.from)
             Command.TAKE -> takeOrder(chatId, content.toLong(), messageId, message.from)
-            Command.CANCEL -> {/*TODO*/}
+            Command.CANCEL -> {
+                /*TODO*/
+            }
             Command.SENT -> markOrderSent(chatId, message.from)
             Command.LIST -> listOrders(chatId)
         }
@@ -50,7 +53,7 @@ internal class NookBotCommandRouter(
     }
 
     private suspend fun order(chatId: Long, orderId: Long, content: String, user: User) {
-        //ignore blank content
+        // ignore blank content
         if (content.isBlank()) return
 
         ordersService.saveOrder(

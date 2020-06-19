@@ -22,4 +22,4 @@ fun webhook(): String = runBlocking {
     return@runBlocking "success"
 }
 
-object Log: Logger by LoggerFactory.getLogger(Log::class.java)
+object Log : Logger by LoggerFactory.getLogger(Log::class.java)

@@ -30,6 +30,7 @@ interface CommandRouter {
         }
     }
 
+    @Suppress("ReturnCount")
     private suspend fun handleCallbackQuery(update: Update, callbackQuery: CallbackQuery) {
         val text = callbackQuery.data
 
