@@ -1,5 +1,8 @@
 # NookBot
-[![img](https://img.shields.io/badge/telegram-bot-blue)](https://telegram.me/Nookex_bot)
+![build](https://github.com/gumil/nookbot/workflows/build/badge.svg)
+[![telegram](https://img.shields.io/badge/telegram-bot-blue)](https://telegram.me/Nookex_bot)
+[![detekt](https://img.shields.io/badge/code%20quality-detekt-red)](config/detekt/detekt.yml)
+[![codecov](https://codecov.io/gh/gumil/NookBot/branch/master/graph/badge.svg)](https://codecov.io/gh/gumil/NookBot)
 
 Telegram bot to manage order exchanges between members in a group
 
@@ -9,7 +12,7 @@ Telegram bot to manage order exchanges between members in a group
  - /list - lists all pending orders.
 
 ## Overview
-![](/img/high-level-design.png)
+![](img/high-level-design.png)
 
 The bot uses a Kotlin stack:
  - [Kotless](https://github.com/JetBrains/kotless/) - serverless framework
