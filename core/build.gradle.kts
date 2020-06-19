@@ -89,3 +89,21 @@ tasks.withType<KotlinCompile>().configureEach {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+apply<JacocoPlugin>()
+
+extensions.getByType(JacocoPluginExtension::class.java).toolVersion = "0.8.5"
+
+tasks.named<JacocoReport>("jacocoTestReport").configure {
+    dependsOn(tasks.named("test"))
+    reports.apply {
+        xml.apply {
+            isEnabled = true
+            destination = File("${project.buildDir}/reports/jacocoTestReport.xml")
+        }
+        html.apply {
+            isEnabled = true
+            destination = File("${project.buildDir}/reports/jacoco")
+        }
+    }
+}
