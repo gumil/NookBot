@@ -40,7 +40,6 @@ internal class FakeTelegramApi : TelegramApi {
         }
     }
 
-
     fun givenSentMessage(message: Message) {
         sentMessage = { message }
     }
