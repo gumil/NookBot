@@ -8,7 +8,7 @@ import dev.gumil.nookbot.repository.SellerId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 
-internal class FakeOrdersRepository: OrdersRepository {
+internal class FakeOrdersRepository : OrdersRepository {
     private var ordersList: List<Order>? = null
     private var savedOrder: Pair<Long, Order>? = null
     private var givenOrder: Order? = null

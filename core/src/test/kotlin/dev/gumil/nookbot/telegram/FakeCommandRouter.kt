@@ -4,7 +4,7 @@ import dev.gumil.nookbot.telegram.entities.Update
 import dev.gumil.nookbot.telegram.exceptions.CommandParsingError
 import org.junit.jupiter.api.Assertions.assertEquals
 
-class FakeCommandRouter: CommandRouter {
+class FakeCommandRouter : CommandRouter {
     private var parsingError: CommandParsingError? = null
     private var routingUpdate: Triple<Update, String, String>? = null
 
@@ -16,11 +16,11 @@ class FakeCommandRouter: CommandRouter {
         parsingError = error
     }
 
-    fun <T: CommandParsingError> verifyError(clazz: Class<T>) {
+    fun <T : CommandParsingError> verifyError(clazz: Class<T>) {
         assertEquals(parsingError!!::class.java, clazz)
     }
 
-    inline fun <reified T: CommandParsingError> verifyError() {
+    inline fun <reified T : CommandParsingError> verifyError() {
         verifyError(T::class.java)
     }
 
